@@ -17,7 +17,7 @@ namespace WindowsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            char[,] nfa = new char[100, 100];
+            char[,] nfa = new char[30, 30];
             char[] str;
             int[] s = new int[10];
             int[] f = new int[10];
@@ -91,21 +91,19 @@ namespace WindowsApplication1
                     count = count + 1;
                     f[m] = count;
                     nfa[f[m] - 1, f[m]] = '¦Å';
-                    if (str[j - 1] != ')' && str[j - 1] != '*')
-                    {
-                        m = m - 1;
-                    }
+                    f[m - 1] = f[m];
+                    m = m - 1;
                 }
                 else if (str[j] == '(')
                 {
                     f[m] = f[m] + 1;
                     nfa[f[m] - 1, f[m]] = '¦Å';
-                    count = count + 1;
+                    count = count + 1;  
                     n = n + 1;
                     m = m + 1;
                     count=count+1;
-                    s[m] = f[m - 1];
-                    f[m] = s[m] + 1;
+                    s[m] = f[m - 1] - 1;
+                    f[m] = f[m - 1] + 1;
                     nfa[f[m - 1], f[m]] = '¦Å';
                 }
                 else if (str[j] == ')')
@@ -121,7 +119,10 @@ namespace WindowsApplication1
                     count = count + 1;
                     nfa[f[m], f[m - 1]] = '¦Å';
                     f[m] = f[m - 1];
-                    m = m - 1;
+                    if (str[j + 1] != '*')
+                    {
+                        m = m - 1;
+                    }
                 }
             }
             MessageBox.Show("" + count + " " + f[0] + " " + nfa[3, 4] + " " + nfa[6, 7] + "");
