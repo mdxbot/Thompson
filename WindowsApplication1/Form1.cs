@@ -25,27 +25,11 @@ namespace WindowsApplication1
             int flag = 0;//记录未完成或
             int n = 0;//未完成左括号个数
             int m = 0;//层级
-            //int num1 = 1;//基础模块数
             s[0] = 0;
             f[0] = 1;
             nfa[s[0],f[0]] = 'ε';
             int num = textBox1.Text.Length;
             str = textBox1.Text.ToCharArray();
-            //for (int i = 0; i < num; i++)
-            //{
-            //    if(str[i] == '(')
-            //    {
-            //        n = n + 1;
-            //    }
-            //    else if(str[i] == ')')
-            //    {
-            //        n = n - 1;
-            //    }
-            //    if(n == 0 && str[i] == '(')
-            //    {
-
-            //    }
-            //}
             for (int j = 0; j < num; j++)
             {
                 //判断字符
@@ -114,6 +98,9 @@ namespace WindowsApplication1
                 }
                 else if (str[j] == '(')
                 {
+                    f[m] = f[m] + 1;
+                    nfa[f[m] - 1, f[m]] = 'ε';
+                    count = count + 1;
                     n = n + 1;
                     m = m + 1;
                     count=count+1;
