@@ -125,7 +125,23 @@ namespace WindowsApplication1
                     }
                 }
             }
-            MessageBox.Show("" + count + " " + f[0] + " " + nfa[3, 4] + " " + nfa[6, 7] + "");
+            //MessageBox.Show("" + count + " " + f[0] + " " + nfa[3, 4] + " " + nfa[6, 7] + "");
+        }
+        int move(int i, char x, char[,] array1)
+        {
+            int t = 404;
+            for(int j = 1; j < 100; j = j + 1)
+            {
+                if(array1[i, j] == x)
+                {
+                    t = j;
+                }
+            }
+            return t;
+        }
+        void smove(int[] start, char r, int[,] status)
+        {
+
         }
     }
 }
