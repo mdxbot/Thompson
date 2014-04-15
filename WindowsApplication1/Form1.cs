@@ -127,119 +127,25 @@ namespace WindowsApplication1
             }
             //MessageBox.Show("" + count + " " + f[0] + " " + nfa[3, 4] + " " + nfa[6, 7] + "");
         }
-        List<int> move(int i, char x, char[,] array1)
-        {
-            List<int> t = new List<int>();
-            int max=array1.GetLength(1);
-            for (int j = 0; j < max; j = j + 1)
-            {
-                if (array1[i, j] == x)
-                {
-                    t.Add(j);
-                }
-            }
-            return t;
-        }
-        int smove(List<int> start, char r, List<List<int>> status, char[,] array1)
-        {
-            int num = 404;
-            int l1 = 0, l2 = 0;
-            int n = start.Count;
-            List<int> temp1 = new List<int>();
-            List<int> temp2 = new List<int>();
-            List<int>  closure=new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                temp1 = move(start[i], r, array1);
-                if (temp1.Count == 0)
-                {
-                    temp2 = move(start[i], '¦Å', array1);
-                }
-                else
-                {
-                    l1 = temp1.Count;
-                    for (int j = 0; j < l1; j++)
-                    {
-                        temp2 = move(temp1[j], '¦Å', array1);
-                        if (closure.Contains(temp1[j]) == false)
-                        {
-                            closure.Add(temp1[j]);
-                        }
-                    }
-                }
-                if (temp2.Count != 0)
-                {
-                    l2 = temp2.Count;
-                    for (int b = 0; b < l2; b++)
-                    {
-                        if (closure.Contains(temp2[b]) == false)
-                        {
-                            closure.Add(temp2[b]);
-                        }
-                    }
-                }
-            }
-            int m = status.Count;
-            int flag = 0;
-            if (m == 0)
-            {
-                closure.Add(0);
-                status.Add(closure);
-                num = 0;
-            }
-            else
-            {
-                for (int k = 0; k < m; k++)
-                {
-                    flag = 0;
-                    if (closure.Count == status[k].Count)
-                    {
-                        for (int a = 0; a < m; a++)
-                        {
-                            if (status[k].Contains(closure[a]) == false)
-                            {
-                                flag = 1;
-                                break;
-                            }
-                        }
-                        if (flag == 0)
-                        {
-                            num = k;
-                            break;
-                        }
-                    }
-                    else if (closure.Count != 0)
-                    {
-                        flag = 1;
-                    }
-                }
-                if (flag == 1)
-                {
-                    status.Add(closure);
-                    num = status.Count - 1;
-                }
-            }
-            return num;
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<List<int>> status=new List<List<int>>();
-            char[,] nfa = new char[10, 10];
-            nfa[0, 1] = '¦Å';
-            nfa[0, 4] = '¦Å';
-            nfa[1, 2] = 'a';
-            nfa[4, 5] = 'b';
-            nfa[2, 3] = '¦Å';
-            nfa[5, 3] = '¦Å';
-            List<int> start=new List<int>();
-            start.Add(0);
-            MessageBox.Show(smove(start, '¦Å', status, nfa).ToString());
-            MessageBox.Show(smove(status[0], 'a', status, nfa).ToString());
-            MessageBox.Show(smove(status[1], 'a', status, nfa).ToString());
-            MessageBox.Show(smove(status[2], 'a', status, nfa).ToString());
-            MessageBox.Show(smove(status[3], 'a', status, nfa).ToString());
-            label1.Text = status[2][0].ToString();
+            //List<List<int>> status = new List<List<int>>();
+            //char[,] nfa = new char[10, 10];
+            //nfa[0, 1] = '¦Å';
+            //nfa[0, 4] = '¦Å';
+            //nfa[1, 2] = 'a';
+            //nfa[4, 5] = 'b';
+            //nfa[2, 3] = '¦Å';
+            //nfa[5, 3] = '¦Å';
+            //List<int> start = new List<int>();
+            //start.Add(0);
+            //MessageBox.Show(smove(start, '¦Å', status, nfa).ToString());
+            //MessageBox.Show(smove(status[0], 'a', status, nfa).ToString());
+            //MessageBox.Show(smove(status[1], 'a', status, nfa).ToString());
+            //MessageBox.Show(smove(status[2], 'a', status, nfa).ToString());
+            //MessageBox.Show(smove(status[3], 'a', status, nfa).ToString());
+            //label1.Text = status[2][0].ToString();
         }
     }
 }
