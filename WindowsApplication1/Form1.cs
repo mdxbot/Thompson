@@ -50,14 +50,14 @@ namespace WindowsApplication1
                 }
                 else if (str[j] == '|')
                 {
-                    if(flag == 1)
+                    if (flag == 1)
                     {
                         nfa[f[m], f[m - 1]] = '¦Å';
                         count = count + 1;
                         s[m] = count;
                         nfa[s[m - 1], s[m]] = '¦Å';
                     }
-                    else if(flag == 0)
+                    else if (flag == 0)
                     {
                         flag = 1;
                         m = m + 1;
@@ -127,21 +127,76 @@ namespace WindowsApplication1
             }
             //MessageBox.Show("" + count + " " + f[0] + " " + nfa[3, 4] + " " + nfa[6, 7] + "");
         }
-        int move(int i, char x, char[,] array1)
+        int[] move(int i, char x, char[,] array1)
         {
-            int t = 404;
-            for(int j = 1; j < 100; j = j + 1)
+            int[] t = new int[20];
+            int n = 0;
+            t[0] = 404;
+            for (int j = 1; j < 100; j = j + 1)
             {
-                if(array1[i, j] == x)
+                if (array1[i, j] == x)
                 {
-                    t = j;
+                    t[n] = j;
+                    n = n + 1;
                 }
             }
             return t;
         }
-        void smove(int[] start, char r, int[,] status)
+        int smove(int[] start, char r, List<List<int>> status, char[,] array1)
         {
-
+            int num = 404;
+            int l = 0;
+            int n = start.Length;
+            int[] temp = new int[20];
+            List<int>  closure=new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                temp = move(start[i], r, array1);
+                if (temp[0] == 404)
+                {
+                    continue;
+                }
+                else
+                {
+                    l = temp.Length;
+                    for (int j = 0; j < l; j++)
+                    {
+                        closure.Add(temp[j]);
+                    }
+                }
+            }
+            int m = status.Count;
+            int flag = 0;
+            for (int k = 0; k < m; k++)
+            {
+                flag = 0;
+                if (closure.Count == status[k].Count)
+                {
+                    for (int a = 0; a < m; a++)
+                    {
+                        if (closure[a] != status[k][a])
+                        {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag==0)
+                    {
+                        num = k;
+                        break;
+                    }
+                }
+                else
+                {
+                    flag = 1;
+                }
+            }
+            if (flag == 1)
+            {
+                status.Add(closure);
+                num = status.Count;
+            }
+            return num;
         }
     }
 }
