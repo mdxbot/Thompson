@@ -17,9 +17,13 @@ namespace WindowsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int f0 = 1;
             nfa nfa1 = new nfa();
             dfa dfa1 = new dfa();
-            nfa1.getch(textBox1.Text);
+            f0 = nfa1.tonfa(textBox1.Text);
+            dfa1.todfa(nfa1, textBox1.Text, f0);
+            MessageBox.Show("" + dfa1.show(Convert.ToInt32(textBox2.Text),
+                Convert.ToInt32(textBox3.Text)) + "");
         }
 
         private void button2_Click(object sender, EventArgs e)

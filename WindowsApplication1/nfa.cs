@@ -7,11 +7,10 @@ namespace WindowsApplication1
     class nfa
     {
         private char[,] list = new char[100, 100];
-        public int f0;
         private int count;
-        private List<List<int>> status;
+        private int f0;
         
-        public void tonfa(string text)
+        public int tonfa(string text)
         {
             char[] str;
             int[] s = new int[10];
@@ -75,14 +74,15 @@ namespace WindowsApplication1
                         count = count + 1;
                         f[m] = count;
                         m = m + 1;
-                        s[m] = f[m - 1] - 2;
+                        s[m] = f[m - 1] - 1;
                         f[m] = f[m - 1];
                     }
                     count = count + 1;
-                    list[f[m], s[m] + 1] = 'ε';
+                    list[f[m], s[m]] = 'ε';
+                    f[m - 1] = count;
+                    list[f[m], f[m - 1]] = 'ε';
                     f[m] = count;
-                    list[s[m], f[m]] = 'ε';
-                    list[f[m] - 1, f[m]] = 'ε';
+                    list[s[m] - 1, f[m]] = 'ε';
                     count = count + 1;
                     f[m] = count;
                     list[f[m] - 1, f[m]] = 'ε';
@@ -97,7 +97,7 @@ namespace WindowsApplication1
                     n = n + 1;
                     m = m + 1;
                     count = count + 1;
-                    s[m] = f[m - 1] - 1;
+                    s[m] = f[m - 1];
                     f[m] = f[m - 1] + 1;
                     list[f[m - 1], f[m]] = 'ε';
                 }
@@ -110,10 +110,7 @@ namespace WindowsApplication1
                         list[f[m], f[m - 1]] = 'ε';
                         m = m - 1;
                     }
-                    f[m - 1] = count + 1;
-                    count = count + 1;
-                    list[f[m], f[m - 1]] = 'ε';
-                    f[m] = f[m - 1];
+                    f[m - 1] = f[m];
                     if (str[j + 1] != '*')
                     {
                         m = m - 1;
@@ -121,6 +118,7 @@ namespace WindowsApplication1
                 }
             }
             f0 = f[0];
+            return f0;
         }
        
         public List<int> move(int i, char x)
@@ -135,88 +133,6 @@ namespace WindowsApplication1
                 }
             }
             return t;
-        }
-
-        public int smove(List<int> start, char r)
-        {
-            int num = 404;
-            int l1 = 0, l2 = 0;
-            int n = start.Count;
-            List<int> temp1 = new List<int>();
-            List<int> temp2 = new List<int>();
-            List<int> closure = new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                temp1 = move(start[i], r);
-                if (temp1.Count == 0)
-                {
-                    temp2 = move(start[i], 'ε');
-                }
-                else
-                {
-                    l1 = temp1.Count;
-                    for (int j = 0; j < l1; j++)
-                    {
-                        temp2 = move(temp1[j], 'ε');
-                        if (closure.Contains(temp1[j]) == false)
-                        {
-                            closure.Add(temp1[j]);
-                        }
-                    }
-                }
-                if (temp2.Count != 0)
-                {
-                    l2 = temp2.Count;
-                    for (int b = 0; b < l2; b++)
-                    {
-                        if (closure.Contains(temp2[b]) == false)
-                        {
-                            closure.Add(temp2[b]);
-                        }
-                    }
-                }
-            }
-            int m = status.Count;
-            int flag = 0;
-            if (m == 0)
-            {
-                closure.Add(0);
-                status.Add(closure);
-                num = 0;
-            }
-            else
-            {
-                for (int k = 0; k < m; k++)
-                {
-                    flag = 0;
-                    if (closure.Count == status[k].Count)
-                    {
-                        for (int a = 0; a < m; a++)
-                        {
-                            if (status[k].Contains(closure[a]) == false)
-                            {
-                                flag = 1;
-                                break;
-                            }
-                        }
-                        if (flag == 0)
-                        {
-                            num = k;
-                            break;
-                        }
-                    }
-                    else if (closure.Count != 0)
-                    {
-                        flag = 1;
-                    }
-                }
-                if (flag == 1)
-                {
-                    status.Add(closure);
-                    num = status.Count - 1;
-                }
-            }
-            return num;
         }
 
         public List<char> getch(string text)
