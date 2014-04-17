@@ -111,7 +111,7 @@ namespace WindowsApplication1
                         m = m - 1;
                     }
                     f[m - 1] = f[m];
-                    if (str[j + 1] != '*')
+                    if (j + 1 < num && str[j + 1] != '*')
                     {
                         m = m - 1;
                     }

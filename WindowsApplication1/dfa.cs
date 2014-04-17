@@ -52,40 +52,66 @@ namespace WindowsApplication1
         public int smove(List<int> start, char r, nfa nfa1)
         {
             int num = 404;
-            int l1 = 0, l2 = 0;
+            int l1 = 0;
             int n = start.Count;
             List<int> temp1 = new List<int>();
             List<int> temp2 = new List<int>();
             List<int> closure = new List<int>();
             for (int i = 0; i < n; i++)
             {
-                temp1 = nfa1.move(start[i], r);
-                if (temp1.Count == 0)
+                if (r != 'ε')
                 {
-                    temp2 = nfa1.move(start[i], 'ε');
-                }
-                else
-                {
-                    l1 = temp1.Count;
-                    for (int j = 0; j < l1; j++)
+                    foreach (var item in nfa1.move(start[i], r))
+                        temp1.Add(item);
+                    if (temp1.Count != 0)
                     {
-                        temp2 = nfa1.move(temp1[j], 'ε');
-                        if (closure.Contains(temp1[j]) == false)
+                        l1 = temp1.Count;
+                        for (int j = 0; j < l1; j++)
                         {
-                            closure.Add(temp1[j]);
+                            if (closure.Contains(temp1[j]) == false)
+                            {
+                                closure.Add(temp1[j]);
+                            }
                         }
                     }
                 }
-                if (temp2.Count != 0)
+                temp1.Clear();
+                temp1 = nfa1.move(start[i], 'ε');
+                int count = temp1.Count;
+                while (temp1.Count != 0)
                 {
-                    l2 = temp2.Count;
-                    for (int b = 0; b < l2; b++)
+                    int e = temp1.Count;
+                    for (int t = 0; t < e; t++)
                     {
-                        if (closure.Contains(temp2[b]) == false)
+                        if (closure.Contains(temp1[t]) == false)
                         {
-                            closure.Add(temp2[b]);
+                            closure.Add(temp1[t]);
                         }
                     }
+                    temp1.Clear();
+                    foreach (var item in closure)
+                        temp1.Add(item);
+                    int c = closure.Count;
+                    for (int b = 0; b < c; b++)
+                    {
+                        if (nfa1.move(temp1[b], 'ε').Count != 0)
+                        {
+                            int d = nfa1.move(temp1[b], 'ε').Count;
+                            for (int s = 0; s < d; s++)
+                            {
+                                if (temp2.Contains(nfa1.move(temp1[b], 'ε')[s]) == false &&
+                                    closure.Contains(nfa1.move(temp1[b], 'ε')[s]) == false)
+                                {
+                                    temp2.Add(nfa1.move(temp1[b], 'ε')[s]);
+                                    closure.Add(nfa1.move(temp1[b], 'ε')[s]);
+                                }
+                            }
+                        }
+                    }
+                    temp1.Clear();
+                    foreach (var item in temp2)
+                        temp1.Add(item);
+                    temp2.Clear();
                 }
             }
             int m = status.Count;
@@ -129,6 +155,13 @@ namespace WindowsApplication1
                 }
             }
             return num;
+        }
+
+        public void mindfa()
+        {
+            List<List<int>> stat = new List<List<int>>();
+            List<int> temp1=new List<int>();
+
         }
 
         public char show(int x, int y)
