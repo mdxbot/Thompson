@@ -22,7 +22,8 @@ namespace WindowsApplication1
             dfa dfa1 = new dfa();
             f0 = nfa1.tonfa(textBox1.Text);
             dfa1.todfa(nfa1, textBox1.Text, f0);
-            //MessageBox.Show("" + dfa1.show(0, 'a') + "");
+            dfa1.mindfa();
+            MessageBox.Show("" + dfa1.show(0, 'a') + "");
         }
 
         private void button2_Click(object sender, EventArgs e)

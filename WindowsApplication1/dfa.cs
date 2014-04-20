@@ -37,7 +37,7 @@ namespace WindowsApplication1
                     }
                     if (temp != 404)
                     {
-                        list[tag, i] = temp;
+                        list[tag + 1, i] = temp + 1;
                     }
                 }
                 tag = tag + 1;
@@ -47,7 +47,7 @@ namespace WindowsApplication1
             {
                 if (status[s].Contains(f0))
                 {
-                    final.Add(s);
+                    final.Add(s + 1);
                 }
             }
         }
@@ -174,14 +174,90 @@ namespace WindowsApplication1
                     num = status.Count - 1;
                 }
             }
+            temp1.Clear();
+            temp2.Clear();
             return num;
         }
 
         public void mindfa()
         {
-            List<List<int>> stat = new List<List<int>>();
-            List<int> temp1=new List<int>();
-
+            int[] de = new int[50];
+            int[] stat = new int[50];
+            int[,] nlist = new int[30, 30];
+            int m = status.Count;
+            int n = ch.Count;
+            int count = 0;
+            int sum = 2;
+            de[0] = 3;
+            //List<List<int>> stat = new List<List<int>>();
+            //List<int> temp1 = new List<int>();
+            //List<List<int>> temp2 = new List<List<int>>();
+            //temp2.Add(final);
+            for (int i = 1; i < m + 1; i++)
+            {
+                if (final.Contains(i))
+                {
+                    de[i] = 1;
+                }
+                else
+                {
+                    de[i] = 2;
+                }
+            }
+            while (compare(stat, de) == false)
+            {
+                de.CopyTo(stat, 0);
+                for (int i = sum; i < de[0]; i++)
+                {
+                    int g = 0;
+                    if (g == 0)
+                    {
+                        sum = de[0];
+                        g = 1;
+                    }
+                    for (int k = 0; k < ch.Count; k++)
+                    {
+                        int tag = 0;
+                        count = 0;
+                        for (int j = 1; j < 50; j++)
+                        {
+                            if (de[j] == i)
+                            {
+                                if (count == 0)
+                                {
+                                    count = j;
+                                }
+                                else
+                                {
+                                    int f = list[j, k];
+                                    if (de[f] != de[list[count, k]])
+                                    {
+                                        de[j] = de[0];
+                                        tag = 1;
+                                    }
+                                }
+                            }
+                        }
+                        if (tag == 1)
+                        {
+                            de[0] = de[0] + 1;
+                        }
+                    }
+                }
+            }
+            //for (int i = 0; i < stat.Count; i++)
+            //{
+            //    for (int j = 0; j < ch.Count; j++)
+            //    {
+            //        if (list[stat[i][0], j] != 0)
+            //        {
+            //            int s = de[list[stat[i][0], j]];
+            //            nlist[i + 1, j] = s + 1;
+            //        }
+            //    }
+            //}
+            //list.Initialize();
+            //nlist.CopyTo(list, 0);
         }
 
         public int show(int x, char y)
@@ -194,6 +270,26 @@ namespace WindowsApplication1
             {
                 return 404;
             }
+        }
+
+        private bool compare(int[] array1,int[] array2)
+        {
+            bool jug = true;
+            if (array1.Length == array2.Length)
+            {
+                for (int i = 0; i < array1.Length; i++)
+                {
+                    if (array1[i] != array2[i])
+                    {
+                        jug = false;
+                    }
+                }
+            }
+            else
+            {
+                jug = false;
+            }
+            return jug;
         }
     }
 }
