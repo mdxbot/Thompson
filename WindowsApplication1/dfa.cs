@@ -202,7 +202,6 @@ namespace WindowsApplication1
             }
             while (compare(stat, de) == false)
             {
-                int g = 0;
                 de.CopyTo(stat, 0);
                 for (int i = 1; i < de[0]; i++)
                 {
