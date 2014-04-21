@@ -187,34 +187,25 @@ namespace WindowsApplication1
             int m = status.Count;
             int n = ch.Count;
             int count = 0;
-            int sum = 2;
             de[0] = 3;
-            //List<List<int>> stat = new List<List<int>>();
-            //List<int> temp1 = new List<int>();
-            //List<List<int>> temp2 = new List<List<int>>();
-            //temp2.Add(final);
+            List<int> temp1 = new List<int>();
             for (int i = 1; i < m + 1; i++)
             {
                 if (final.Contains(i))
                 {
-                    de[i] = 1;
+                    de[i] = 2;
                 }
                 else
                 {
-                    de[i] = 2;
+                    de[i] = 1;
                 }
             }
             while (compare(stat, de) == false)
             {
+                int g = 0;
                 de.CopyTo(stat, 0);
-                for (int i = sum; i < de[0]; i++)
+                for (int i = 1; i < de[0]; i++)
                 {
-                    int g = 0;
-                    if (g == 0)
-                    {
-                        sum = de[0];
-                        g = 1;
-                    }
                     for (int k = 0; k < ch.Count; k++)
                     {
                         int tag = 0;
@@ -230,7 +221,7 @@ namespace WindowsApplication1
                                 else
                                 {
                                     int f = list[j, k];
-                                    if (de[f] != de[list[count, k]])
+                                    if (de[f] != de[list[count, k]] && f != 0)
                                     {
                                         de[j] = de[0];
                                         tag = 1;
@@ -245,19 +236,32 @@ namespace WindowsApplication1
                     }
                 }
             }
-            //for (int i = 0; i < stat.Count; i++)
-            //{
-            //    for (int j = 0; j < ch.Count; j++)
-            //    {
-            //        if (list[stat[i][0], j] != 0)
-            //        {
-            //            int s = de[list[stat[i][0], j]];
-            //            nlist[i + 1, j] = s + 1;
-            //        }
-            //    }
-            //}
-            //list.Initialize();
-            //nlist.CopyTo(list, 0);
+            for (int i = 1; i < 50; i++)
+            {
+                if(final.Contains(i))
+                {
+                    temp1.Add(de[i]);
+                }
+                for (int j = 0; j < ch.Count; j++)
+                {
+                    if (list[i, j] != 0)
+                    {
+                        int s = de[list[i, j]];
+                        if(nlist[de[i], j] != s)
+                        {
+                            nlist[de[i], j] = s;
+                        }
+                    }
+                }
+            }
+            list.Initialize();
+            for (int i = 0; i < 30; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    list[i, j] = nlist[i, j];
+                }
+            }
         }
 
         public int show(int x, char y)
