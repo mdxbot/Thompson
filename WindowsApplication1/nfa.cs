@@ -6,7 +6,7 @@ namespace WindowsApplication1
 {
     class nfa
     {
-        private char[,] list = new char[100, 100];
+        private char[,] list = new char[70, 70];
         private int count;
         private int f0;
         
@@ -114,6 +114,45 @@ namespace WindowsApplication1
                     if (j + 1 < num && str[j + 1] != '*')
                     {
                         m = m - 1;
+                    }
+                }
+            }
+            for (int j = 2; j < 70; j++)//去掉无用空转移
+            {
+                int sum = 0;
+                int pre = 0;
+                for (int i = 1; i < 70; i++)
+                {
+                    if (sum < 2 && list[i, j] == 'ε')
+                    {
+                        sum = sum + 1;
+                        if (sum == 1)
+                        {
+                            pre = i;
+                        }
+                    }
+                    else if (sum == 2)
+                    {
+                        break;
+                    }
+                }
+                if (sum == 1 && pre != -1)
+                {
+                    for (int k = 2; k < 70; k++)
+                    {
+                        if (list[pre, k] != list[0,0])
+                        {
+                            sum = sum + 1;
+                        }
+                    }
+                    if (sum == 2)
+                    {
+                        list[pre, j] = list[0, 0];
+                        for (int p = 0; p < 70; p++)
+                        {
+                            list[p, j] = list[p, pre];
+                            list[p, pre] = list[0, 0];
+                        }
                     }
                 }
             }
