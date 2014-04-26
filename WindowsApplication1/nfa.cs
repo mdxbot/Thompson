@@ -28,7 +28,8 @@ namespace WindowsApplication1
             {
                 //判断字符
                 if ((str[j] >= 'a' && str[j] <= 'z') || (str[j] >= 'A' && str[j] <= 'Z') ||
-                    (str[j] >= '0' && str[j] <= '9'))
+                    (str[j] >= '0' && str[j] <= '9') || str[j] == '.' || str[j] == '_' ||
+                    str[j] == '+' || str[j] == '-' || str[j] == '*' || str[j] == '/')
                 {
                     list[f[m], f[m] + 1] = str[j];
                     count = count + 1;

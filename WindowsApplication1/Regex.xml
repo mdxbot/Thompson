@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RE>
+  <regex tag="0">
+    <text>(0|(1|2|3|4|5|6|7|8|9|)(0|1|2|3|4|5|6|7|8|9)*)(ε|.(0|1|2|3|4|5|6|7|8|9)*(1|2|3|4|5|6|7|8|9|))|PI|E</text>
+  </regex>
+  <regex tag="1">
+    <text>(_|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)(_|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|0|1|2|3|4|5|6|7|8|9)*</text>
+  </regex>
+  <regex tag="2">
+    <text></text>
+  </regex>
+  <regex tag="3">
+    <text></text>
+  </regex>
+  <regex tag="4">
+    <text></text>
+  </regex>
+</RE>
