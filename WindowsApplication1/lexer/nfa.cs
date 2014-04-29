@@ -6,7 +6,7 @@ namespace WindowsApplication1
 {
     class nfa
     {
-        private char[,] list = new char[70, 70];
+        private char[,] list = new char[500, 500];
         private int count;
         private int f0;
         
@@ -29,7 +29,9 @@ namespace WindowsApplication1
                 //判断字符
                 if ((str[j] >= 'a' && str[j] <= 'z') || (str[j] >= 'A' && str[j] <= 'Z') ||
                     (str[j] >= '0' && str[j] <= '9') || str[j] == '.' || str[j] == '_' ||
-                    str[j] == '+' || str[j] == '-' || str[j] == '*' || str[j] == '/')
+                    str[j] == '+' || str[j] == '-' || str[j] == '*' || str[j] == '/' || 
+                    str[j] == '\t' || str[j] == '\n' || str[j] == '\r' || str[j] == ' ' ||
+                    str[j] == ';' || str[j] == '(' || str[j] == ')' || str[j] == '^')
                 {
                     list[f[m], f[m] + 1] = str[j];
                     count = count + 1;
@@ -68,7 +70,7 @@ namespace WindowsApplication1
                 }
                 else if (str[j] == '*')
                 {
-                    if (str[j - 1] != ')' && str[j - 1] != '*')
+                    if (str[j - 1] != ']' && str[j - 1] != '*')
                     {
                         list[f[m] - 1, f[m]] = 'ε';
                         list[f[m], f[m] + 1] = str[j - 1];
@@ -90,7 +92,7 @@ namespace WindowsApplication1
                     f[m - 1] = f[m];
                     m = m - 1;
                 }
-                else if (str[j] == '(')
+                else if (str[j] == '[')
                 {
                     f[m] = f[m] + 1;
                     list[f[m] - 1, f[m]] = 'ε';
@@ -102,7 +104,7 @@ namespace WindowsApplication1
                     f[m] = f[m - 1] + 1;
                     list[f[m - 1], f[m]] = 'ε';
                 }
-                else if (str[j] == ')')
+                else if (str[j] == ']')
                 {
                     n = n - 1;
                     if (flag == 1)
@@ -118,11 +120,11 @@ namespace WindowsApplication1
                     }
                 }
             }
-            for (int j = 2; j < 70; j++)//去掉无用空转移
+            for (int j = 2; j < 500; j++)//去掉无用空转移
             {
                 int sum = 0;
                 int pre = 0;
-                for (int i = 1; i < 70; i++)
+                for (int i = 1; i < 500; i++)
                 {
                     if (sum < 2 && list[i, j] == 'ε')
                     {
@@ -139,7 +141,7 @@ namespace WindowsApplication1
                 }
                 if (sum == 1 && pre != -1)
                 {
-                    for (int k = 2; k < 70; k++)
+                    for (int k = 2; k < 500; k++)
                     {
                         if (list[pre, k] != list[0,0])
                         {
@@ -149,7 +151,7 @@ namespace WindowsApplication1
                     if (sum == 2)
                     {
                         list[pre, j] = list[0, 0];
-                        for (int p = 0; p < 70; p++)
+                        for (int p = 0; p < 500; p++)
                         {
                             list[p, j] = list[p, pre];
                             list[p, pre] = list[0, 0];
