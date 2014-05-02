@@ -164,48 +164,6 @@ namespace WindowsApplication1
                     }
                 }
             }
-            //for (int j = 2; j < 300; j++)//去掉无用空转移
-            //{
-            //    int sum = 0;
-            //    int pre = 0;
-            //    for (int i = 1; i < 300; i++)
-            //    {
-            //        if (sum < 2 && list[i, j] == 'ε')
-            //        {
-            //            sum = sum + 1;
-            //            if (sum == 1)
-            //            {
-            //                pre = i;
-            //            }
-            //        }
-            //        else if (sum == 2)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //    if (sum == 1 && pre != -1)
-            //    {
-            //        for (int k = 2; k < 300; k++)
-            //        {
-            //            if (list[pre, k] != list[0,0])
-            //            {
-            //                sum = sum + 1;
-            //            }
-            //        }
-            //        if (sum == 2)
-            //        {
-            //            list[pre, j] = list[0, 0];
-            //            for (int p = 0; p < 300; p++)
-            //            {
-            //                if (list[p, pre] != list[0, 0])
-            //                {
-            //                    list[p, j] = list[p, pre];
-            //                    list[p, pre] = list[0, 0];
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
             f0 = f[0];
             return f0;
         }
