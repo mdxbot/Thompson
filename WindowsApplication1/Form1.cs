@@ -19,15 +19,19 @@ namespace WindowsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            lexer1.output(textBox1.Text);
-            MessageBox.Show("" + lexer1.output(textBox1.Text) + "");
+            textBox2.Text = "";
+            List<string> str = new List<string>();
+            str = lexer1.createstr(textBox1.Text);
+            lexer1.output();
+            for (int i = 0; i < str.Count; i++)
+            {
+                textBox2.Text = textBox2.Text + str[i] + "\r\n";
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            nfa nfa1 = new nfa();
-            nfa1.tonfa("a|b|c|d");
-            MessageBox.Show("123");
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)

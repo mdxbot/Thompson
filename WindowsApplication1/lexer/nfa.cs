@@ -33,7 +33,8 @@ namespace WindowsApplication1
                     (str[j] >= '0' && str[j] <= '9') || str[j] == '.' || str[j] == '_' ||
                     str[j] == '+' || str[j] == '-' || str[j] == '*' || str[j] == '/' || 
                     str[j] == '\t' || str[j] == '\n' || str[j] == '\r' || str[j] == ' ' ||
-                    str[j] == ';' || str[j] == '(' || str[j] == ')' || str[j] == '^' || str[j] == 'ε')
+                    str[j] == ';' || str[j] == '(' || str[j] == ')' || str[j] == '^' ||
+                    str[j] == 'ε' || str[j] == '?' || str[j] == '=')
                 {
                     list[f[m], f[m] + 1] = str[j];
                     count = count + 1;
@@ -195,7 +196,8 @@ namespace WindowsApplication1
                     (str[j] >= '0' && str[j] <= '9') || str[j] == '.' || str[j] == '_' ||
                     str[j] == '+' || str[j] == '-' || str[j] == '*' || str[j] == '/' ||
                     str[j] == '\t' || str[j] == '\n' || str[j] == '\r' || str[j] == ' ' ||
-                    str[j] == ';' || str[j] == '(' || str[j] == ')' || str[j] == '^')
+                    str[j] == ';' || str[j] == '(' || str[j] == ')' || str[j] == '^' ||
+                    str[j] == '?' || str[j] == '=')
                 {
                     if (ch.Contains(str[j]) == false)
                     {
