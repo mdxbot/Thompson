@@ -10,7 +10,7 @@ namespace WindowsApplication1
         private List<dfa> dfa = new List<dfa>();
         private List<string> content = new List<string>();
         private List<int> type = new List<int>();
-        private List<string> final = new List<string>();
+        private List<string> errors = new List<string>();
 
         public void createdfa()
         {
@@ -106,7 +106,7 @@ namespace WindowsApplication1
                                 acc = true;
                                 if (o == 1 && word.Length > 32)
                                 {
-                                    final.Add("Error:Invaild identifier length");
+                                    errors.Add("Error:Invaild identifier length");
                                     break;
                                 }
                                 else
@@ -119,7 +119,7 @@ namespace WindowsApplication1
                         }
                         if (acc == false)
                         {
-                            final.Add("Error:Invalid word'" + word + "'");
+                            errors.Add("Error:Invalid word'" + word + "'");
                         }
                         word = "";
                     }
@@ -136,7 +136,7 @@ namespace WindowsApplication1
                                 acc = true;
                                 if (o == 1 && word.Length > 32)
                                 {
-                                    final.Add("Error:Invaild identifier length");
+                                    errors.Add("Error:Invaild identifier length");
                                     break;
                                 }
                                 else
@@ -161,7 +161,7 @@ namespace WindowsApplication1
                         }
                         if (acc == false)
                         {
-                            final.Add("Error:Invalid word'" + word + "'");
+                            errors.Add("Error:Invalid word'" + word + "'");
                         }
                         word = "";
                     }
@@ -169,14 +169,14 @@ namespace WindowsApplication1
                     type.Add(tag);
                 }
             }
-            return final;
+            return errors;
         }
 
         public List<List<string>> output()
         {
             List<List<string>> str = new List<List<string>>();
             List<string> t = new List<string>();
-            if (final.Count == 0)
+            if (errors.Count == 0)
             {
                 str.Add(content);
                 foreach (var item in type)
