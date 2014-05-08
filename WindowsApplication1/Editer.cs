@@ -9,10 +9,11 @@ using System.Xml;
 
 namespace WindowsApplication1
 {
-    public partial class Form1 : Form
+    public partial class Editer : Form
     {
         lexer lexer1 = new lexer();
-        public Form1()
+        parsing sa = new parsing();
+        public Editer()
         {
             InitializeComponent();
         }
@@ -31,13 +32,17 @@ namespace WindowsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            List<string> str = new List<string>();
+            str.Add("<e>¡ú<e>+<t>|<t>");
+            str.Add("<t>¡ú<t>*<f>|<f>");
+            str.Add("<f>¡ú(<e>)|-<f>|a");
+            sa.optimize(str);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Editer_Load(object sender, EventArgs e)
         {
             textBox1.Focus();
-            lexer1.createdfa();
+            //lexer1.createdfa();
         }
     }
 }
