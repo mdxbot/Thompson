@@ -87,61 +87,43 @@ namespace WindowsApplication1
                 }
                 else
                 {
-                    type = 2;
+                    foreach (var item in nfa1.move(start[0], 'ε'))
+                        closure.Add(item);
+                    if (closure.Count != 0)
+                    {
+                        type = 1;
+                    }
                 }
             }
-            for (int i = 0; i < n; i++)
+            if (type >= 1)
             {
-                if (type >= 1)
+                temp1.Clear();
+                foreach (var item in closure)
+                    temp1.Add(item);
+                while (temp1.Count != 0)
                 {
-                    temp1.Clear();
-                    if (type == 2)
+                    int e = temp1.Count;
+                    for (int b = 0; b < e; b++)
                     {
-                        foreach (var item in nfa1.move(start[i], 'ε'))
-                            temp1.Add(item);
-                    }
-                    foreach(var item in closure)
-                    {
-                        if (temp1.Contains(item) == false)
-                            temp1.Add(item);
-                    }
-                    int count = temp1.Count;
-                    while (temp1.Count != 0)
-                    {
-                        int e = temp1.Count;
-                        for (int t = 0; t < e; t++)
+                        if (nfa1.move(temp1[b], 'ε').Count != 0)
                         {
-                            if (closure.Contains(temp1[t]) == false)
+                            int d = nfa1.move(temp1[b], 'ε').Count;
+                            for (int s = 0; s < d; s++)
                             {
-                                closure.Add(temp1[t]);
-                            }
-                        }
-                        temp1.Clear();
-                        foreach (var item in closure)
-                            temp1.Add(item);
-                        int c = closure.Count;
-                        for (int b = 0; b < c; b++)
-                        {
-                            if (nfa1.move(temp1[b], 'ε').Count != 0)
-                            {
-                                int d = nfa1.move(temp1[b], 'ε').Count;
-                                for (int s = 0; s < d; s++)
+                                int h = nfa1.move(temp1[b], 'ε')[s];
+                                if (temp2.Contains(h) == false &&
+                                    closure.Contains(h) == false)
                                 {
-                                    int h = nfa1.move(temp1[b], 'ε')[s];
-                                    if (temp2.Contains(h) == false &&
-                                        closure.Contains(h) == false)
-                                    {
-                                        temp2.Add(h);
-                                        closure.Add(h);
-                                    }
+                                    temp2.Add(h);
+                                    closure.Add(h);
                                 }
                             }
                         }
-                        temp1.Clear();
-                        foreach (var item in temp2)
-                            temp1.Add(item);
-                        temp2.Clear();
                     }
+                    temp1.Clear();
+                    foreach (var item in temp2)
+                        temp1.Add(item);
+                    temp2.Clear();
                 }
             }
             int m = status.Count;
@@ -235,9 +217,8 @@ namespace WindowsApplication1
             }
             while (compare(stat, de) == false)
             {
-                int start = stat[0];
                 de.CopyTo(stat, 0);
-                for (int i = start; i < de[0]; i++)
+                for (int i = 1; i < de[0]; i++)
                 {
                     for (int k = 0; k < ch.Count; k++)
                     {

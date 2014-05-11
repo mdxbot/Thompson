@@ -33,10 +33,8 @@ namespace WindowsApplication1
         private void button2_Click(object sender, EventArgs e)
         {
             List<string> str = new List<string>();
-            str.Add("<e>¡ú<e>+<t>|<t>");
-            str.Add("<t>¡ú<t>*<f>|<f>");
-            str.Add("<f>¡ú(<e>)|-<f>|a");
-            sa.optimize(str);
+            sa.optimize();
+            int i = 1;
         }
 
         private void Editer_Load(object sender, EventArgs e)
