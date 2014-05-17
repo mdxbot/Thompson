@@ -32,7 +32,10 @@ namespace WindowsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            List<char> first = new List<char>();
+            //first = sa.first('b');
+            sa.follow();
+            int i = 1;
         }
 
         private void Editer_Load(object sender, EventArgs e)

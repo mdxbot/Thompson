@@ -8,8 +8,168 @@ namespace WindowsApplication1
     {
         private List<string> grammar = new List<string>();
 
+        public string[,] createtable()
+        {
+            string[,] table = new string[10, 7];
+            return table;
+        }
+
+        public List<char> first(char ch)
+        {
+            List<char> f = new List<char>();
+            if ((ch >= '0' && ch <= '9') || ch == 'ε')
+            {
+                f.Add(ch);
+            }
+            else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+            {
+                int num = -1;
+                for (int i = 0; i < grammar.Count; i++)
+                {
+                    if (grammar[i][0] == ch)
+                    {
+                        num = i;
+                        break;
+                    }
+                }
+                if (num >= 0)
+                {
+                    string[] exp = grammar[num].Split(new char[2] { '|', '→' });
+                    //for (int i = 1; i < exp.Length; i++)
+                    //{
+                    //    if(exp[i]=="ε")
+                    //    {
+                    //        f.Add('ε');
+                    //        break;
+                    //    }
+                    //}
+                    for (int i = 1; i < exp.Length; i++)
+                    {
+                        for (int j = 0; j < exp[i].Length; j++)
+                        {
+                            List<char> temp = new List<char>();
+                            if (j == 0)
+                            {
+                                temp.Add('ε');
+                            }
+                            else
+                            {
+                                foreach(var item in first(exp[i][j-1]))
+                                    temp.Add(item);
+                            }
+                            if (temp.Contains('ε'))
+                            {
+                                foreach (var item in first(exp[i][j]))
+                                {
+                                    if (f.Contains(item) == false)
+                                    {
+                                        f.Add(item);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return f;
+        }
+
+        public List<List<char>> follow()
+        {
+            List<List<char>> f = new List<List<char>>();
+            for (int i = 0; i < grammar.Count; i++)
+            {
+                f.Add(new List<char>());
+            }
+            for (int i = 0; i < grammar.Count; i++)
+            {
+                List<char> temp = new List<char>();
+                for (int j = 0; j < grammar.Count; j++)
+                {
+                    if (j != i)
+                    {
+                        string[] exp = grammar[j].Split('→');
+                        while (exp[1].Contains(grammar[i][0].ToString()))
+                        {
+                            int index = exp[1].IndexOf(grammar[i][0]);
+                            if (index + 1 != exp[1].Length)
+                            {
+                                if (exp[1][index + 1] != '|')
+                                {
+                                    foreach (var item in first(exp[1][index + 1]))
+                                    {
+                                        if (f[i].Contains(item) == false && item != 'ε')
+                                        {
+                                            f[i].Add(item);
+                                        }
+                                    }
+                                }
+                            }
+                            exp[1] = exp[1].Remove(index, 1);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < grammar.Count; i++)
+            {
+                List<char> temp = new List<char>();
+                for (int j = 0; j < grammar.Count; j++)
+                {
+                    if (j != i)
+                    {
+                        string[] exp = grammar[j].Split('→');
+                        while (exp[1].Contains(grammar[i][0].ToString()))
+                        {
+                            int index = exp[1].IndexOf(grammar[i][0]);
+                            if (index + 1 == exp[1].Length)
+                            {
+                                foreach (var item in f[j])
+                                {
+                                    if (f[i].Contains(item) == false)
+                                    {
+                                        f[i].Add(item);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (exp[1][index + 1] == '|')
+                                {
+                                    foreach (var item in f[j])
+                                    {
+                                        if (f[i].Contains(item) == false)
+                                        {
+                                            f[i].Add(item);
+                                        }
+                                    }
+                                }
+                                else if (first(exp[1][index + 1]).Contains('ε'))
+                                {
+                                    foreach (var item in f[j])
+                                    {
+                                        if (f[i].Contains(item) == false)
+                                        {
+                                            f[i].Add(item);
+                                        }
+                                    }
+                                }
+                            }
+                            exp[1] = exp[1].Remove(index, 1);
+                        }
+                    }
+                }
+            }
+            f[0].Add('#');
+            return f;
+        }
+
         public void optimize()//消除左递归和左因子
         {
+            grammar.Clear();
             //grammar.Add("s→icts|ictses|a");
             //grammar.Add("c→b");
 
@@ -17,13 +177,13 @@ namespace WindowsApplication1
             //grammar.Add("b→bc|3");
             //grammar.Add("c→bac|b1|ε");
 
-            //grammar.Add("<l>→<e>;<l>|ε");
-            //grammar.Add("<e>→<e>+<t>|<e>-<t>|<t>");
-            //grammar.Add("<t>→<t>*<f>|<t>/<f>|<t>mod<f>|<f>");
-            //grammar.Add("<f>→(<e>)|id|num");
-            grammar.Clear();
+            //grammar.Add("l→e0l|ε");
+            //grammar.Add("e→e1t|e2t|t");
+            //grammar.Add("t→t3f|t4f|t5f|f");
+            //grammar.Add("f→6e7|8|9");
+
             grammar.Add("a→dbd4dc");//总
-            grammar.Add("b→bdbd|1d3ded|ε");//赋值语句
+            grammar.Add("b→1d3dedb|ε");//赋值语句
             grammar.Add("c→cd3dcd|f|0|1");//表达式
             grammar.Add("d→5d|ε");//分隔符
             grammar.Add("e→cd3d0|0");//赋值语句右边
