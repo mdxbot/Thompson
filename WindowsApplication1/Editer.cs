@@ -32,15 +32,14 @@ namespace WindowsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<string> str = new List<string>();
-            sa.optimize();
-            int i = 1;
+
         }
 
         private void Editer_Load(object sender, EventArgs e)
         {
             textBox1.Focus();
             //lexer1.createdfa();
+            sa.optimize();
         }
     }
 }
