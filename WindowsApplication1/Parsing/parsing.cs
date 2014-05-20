@@ -10,7 +10,42 @@ namespace WindowsApplication1
 
         public string[,] createtable()
         {
-            string[,] table = new string[10, 7];
+            string[,] table = new string[10,15];
+            List<List<char>> fl = follow();
+            for (int i = 0; i < grammar.Count; i++)
+            {
+                string[] exp = grammar[i].Split(new char[2] { '|', '→' });
+                for (int j = 1; j < exp.Length; j++)
+                {
+                    List<char> ftemp = new List<char>();
+                    foreach (var item in first(exp[j][0]))
+                        ftemp.Add(item);
+                    for (int k = 0; k < ftemp.Count; k++)
+                    {
+                        if (ftemp[k] != 'ε')
+                        {
+                            int ch = Convert.ToInt16(ftemp[k].ToString(),10);
+                            table[i, ch] = table[i, ch] + exp[j] + " ";
+                        }
+                    }
+                    if (ftemp.Contains('ε'))
+                    {
+                        for (int k = 0; k < fl[i].Count; k++)
+                        {
+                            int ch = -1;
+                            if (fl[i][k] == '#')
+                            {
+                                ch = 10;
+                            }
+                            else
+                            {
+                                ch = Convert.ToInt16(fl[i][k].ToString(), 10);
+                            }
+                            table[i, ch] = table[i, ch] + exp[j] + " ";
+                        }
+                    }
+                }
+            }
             return table;
         }
 
@@ -182,13 +217,13 @@ namespace WindowsApplication1
             //grammar.Add("t→t3f|t4f|t5f|f");
             //grammar.Add("f→6e7|8|9");
 
-            grammar.Add("a→dbd4dc");//总
-            grammar.Add("b→1d3dedb|ε");//赋值语句
-            grammar.Add("c→cd3dcd|f|0|1");//表达式
+            grammar.Add("a→bd4dc");//总
+            grammar.Add("b→1d3dedb");//赋值语句
+            grammar.Add("c→c30|c31|cf|f");//表达式
             grammar.Add("d→5d|ε");//分隔符
             grammar.Add("e→cd3d0|0");//赋值语句右边
-            grammar.Add("f→2dfd|2d0d|2d0d0d|2d1d|ε");//函数
-            //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符
+            grammar.Add("f→2dfd|2d0d|2d0d0d|2d1d");//函数
+            //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符，9：#
             for (int i = 1; i < grammar.Count; i++)
             {
                 for (int j = 0; j < i; j++)
@@ -462,12 +497,10 @@ namespace WindowsApplication1
                         if (exp[k] != "")
                         {
                             changed = changed + exp[k];
-                            if (k + 1 < exp.Length)
-                            {
-                                changed = changed + "|";
-                            }
+                            changed = changed + "|";
                         }
                     }
+                    changed = changed.Substring(0, changed.Length - 1);
                     grammar.Remove(grammar[i]);
                     grammar.Insert(i, changed);
                 }

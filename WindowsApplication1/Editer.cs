@@ -34,7 +34,7 @@ namespace WindowsApplication1
         {
             List<char> first = new List<char>();
             //first = sa.first('b');
-            sa.follow();
+            //sa.follow();
             int i = 1;
         }
 
@@ -43,6 +43,7 @@ namespace WindowsApplication1
             textBox1.Focus();
             //lexer1.createdfa();
             sa.optimize();
+            sa.createtable();
         }
     }
 }
