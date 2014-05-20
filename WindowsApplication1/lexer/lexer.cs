@@ -73,6 +73,7 @@ namespace WindowsApplication1
         {
             content.Clear();
             type.Clear();
+            errors.Clear();
             List<char> str = new List<char>();
             char[] temp=text.ToCharArray();
             for (int i = 0; i < text.Length; i++)
@@ -178,14 +179,16 @@ namespace WindowsApplication1
             List<string> t = new List<string>();
             if (errors.Count == 0)
             {
+                content.Add("#");
                 str.Add(content);
                 foreach (var item in type)
                     t.Add(item.ToString());
+                t.Add("#");
                 str.Add(t);
             }
             else
             {
-                t.Add("Error 1");
+                t.Add("Error");
                 str.Add(t);
             }
             return str;

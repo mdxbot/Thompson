@@ -20,10 +20,12 @@ namespace WindowsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox2.Text = "";
+            textBox2.Clear();
             List<string> str = new List<string>();
-            str = lexer1.createstr(textBox1.Text);
-            lexer1.output();
+            foreach (var item in lexer1.createstr(textBox1.Text))
+                str.Add(item);
+            foreach (var item in sa.prediction(lexer1))
+                str.Add(item);
             for (int i = 0; i < str.Count; i++)
             {
                 textBox2.Text = textBox2.Text + str[i] + "\r\n";
@@ -41,8 +43,7 @@ namespace WindowsApplication1
         private void Editer_Load(object sender, EventArgs e)
         {
             textBox1.Focus();
-            //lexer1.createdfa();
-            sa.optimize();
+            lexer1.createdfa();
             sa.createtable();
         }
     }

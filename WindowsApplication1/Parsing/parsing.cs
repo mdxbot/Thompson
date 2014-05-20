@@ -7,10 +7,107 @@ namespace WindowsApplication1
     class parsing
     {
         private List<string> grammar = new List<string>();
+        private List<string> errors = new List<string>();
+        private string[,] table = new string[15,15];
 
-        public string[,] createtable()
+        public List<string> prediction(lexer lexer1)
         {
-            string[,] table = new string[10,15];
+            errors.Clear();
+            Stack<char> ch = new Stack<char>();
+            List<string> nstr = new List<string>();
+            List<string> cstr = new List<string>();
+            int s = lexer1.output().Count;
+            if (s > 1)
+            {
+                foreach (var item in lexer1.output()[1])
+                    nstr.Add(item);
+                foreach (var item in lexer1.output()[0])
+                    cstr.Add(item);
+                ch.Push('#');
+                ch.Push('a');
+                int count = 1;
+                while (ch.Peek() != '#')
+                {
+                    string a = nstr[0];
+                    char x = ch.Peek();
+                    if (x >= '0' && x <= '9')
+                    {
+                        if (x.ToString() == a)
+                        {
+                            ch.Pop();
+                            nstr.Remove(nstr[0]);
+                            count++;
+                        }
+                        else
+                        {
+                            int line = 1;
+                            for (int i = 0; i < count; i++)
+                            {
+                                if (cstr[i] == '\n'.ToString())
+                                {
+                                    line = line + 1;
+                                }
+                            }
+                            errors.Add("Error:line(" + line + ") syntax error(1)");
+                            break;
+                        }
+                    }
+                    else if (x == 'ε')
+                    {
+                        ch.Pop();
+                        continue;
+                    }
+                    else
+                    {
+                        int u = 0;
+                        for (int i = 0; i < grammar.Count; i++)
+                        {
+                            if (grammar[i][0] == x)
+                            {
+                                u = i;
+                                break;
+                            }
+                        }
+                        int n = -1;
+                        if (a == "#")
+                        {
+                            n = 10;
+                        }
+                        else
+                        {
+                            n = Convert.ToInt16(a, 10);
+                        }
+                        if (table[u, n] != null)
+                        {
+                            ch.Pop();
+                            for (int i = table[u, n].Length; i > 0; i--)
+                            {
+                                ch.Push(table[u, n][i - 1]);
+                            }
+                        }
+                        else
+                        {
+                            int line = 1;
+                            for (int i = 0; i < count; i++)
+                            {
+                                if (cstr[i] == '\n'.ToString())
+                                {
+                                    line = line + 1;
+                                }
+                            }
+                            errors.Add("Error:line(" + line + ") syntax error(2)");
+                            break;
+                        }
+                    }
+                }
+            }
+            return errors;
+        }
+
+        public void createtable()
+        {
+            optimize();
+            table.Initialize();
             List<List<char>> fl = follow();
             for (int i = 0; i < grammar.Count; i++)
             {
@@ -25,7 +122,7 @@ namespace WindowsApplication1
                         if (ftemp[k] != 'ε')
                         {
                             int ch = Convert.ToInt16(ftemp[k].ToString(),10);
-                            table[i, ch] = table[i, ch] + exp[j] + " ";
+                            table[i, ch] = table[i, ch] + exp[j];
                         }
                     }
                     if (ftemp.Contains('ε'))
@@ -41,12 +138,12 @@ namespace WindowsApplication1
                             {
                                 ch = Convert.ToInt16(fl[i][k].ToString(), 10);
                             }
-                            table[i, ch] = table[i, ch] + exp[j] + " ";
+                            //table[i, ch] = table[i, ch] + exp[j];
+                            table[i, ch] = "ε";
                         }
                     }
                 }
             }
-            return table;
         }
 
         public List<char> first(char ch)
@@ -70,14 +167,6 @@ namespace WindowsApplication1
                 if (num >= 0)
                 {
                     string[] exp = grammar[num].Split(new char[2] { '|', '→' });
-                    //for (int i = 1; i < exp.Length; i++)
-                    //{
-                    //    if(exp[i]=="ε")
-                    //    {
-                    //        f.Add('ε');
-                    //        break;
-                    //    }
-                    //}
                     for (int i = 1; i < exp.Length; i++)
                     {
                         for (int j = 0; j < exp[i].Length; j++)
@@ -217,12 +306,12 @@ namespace WindowsApplication1
             //grammar.Add("t→t3f|t4f|t5f|f");
             //grammar.Add("f→6e7|8|9");
 
-            grammar.Add("a→bd4dc");//总
-            grammar.Add("b→1d3dedb");//赋值语句
-            grammar.Add("c→c30|c31|cf|f");//表达式
-            grammar.Add("d→5d|ε");//分隔符
-            grammar.Add("e→cd3d0|0");//赋值语句右边
-            grammar.Add("f→2dfd|2d0d|2d0d0d|2d1d");//函数
+            grammar.Add("a→bf4fc|ε");//总
+            grammar.Add("b→1f3fd|1f3fdfb");//赋值语句
+            grammar.Add("c→03c|13c|e3c|1|0|ε");//表达式
+            grammar.Add("d→df3f0|0");//赋值语句右边
+            grammar.Add("e→2fef|2f0f0f|2f0f|2f1f|0e");//函数
+            grammar.Add("f→5f|ε");//分隔符
             //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符，9：#
             for (int i = 1; i < grammar.Count; i++)
             {
