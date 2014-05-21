@@ -55,7 +55,6 @@ namespace WindowsApplication1
                     else if (x == 'ε')
                     {
                         ch.Pop();
-                        continue;
                     }
                     else
                     {
@@ -138,8 +137,8 @@ namespace WindowsApplication1
                             {
                                 ch = Convert.ToInt16(fl[i][k].ToString(), 10);
                             }
-                            //table[i, ch] = table[i, ch] + exp[j];
-                            table[i, ch] = "ε";
+                            table[i, ch] = table[i, ch] + exp[j];
+                            //table[i, ch] = "ε";
                         }
                     }
                 }
@@ -209,6 +208,7 @@ namespace WindowsApplication1
             {
                 f.Add(new List<char>());
             }
+            f[0].Add('#');
             for (int i = 0; i < grammar.Count; i++)
             {
                 List<char> temp = new List<char>();
@@ -287,7 +287,6 @@ namespace WindowsApplication1
                     }
                 }
             }
-            f[0].Add('#');
             return f;
         }
 
@@ -306,12 +305,15 @@ namespace WindowsApplication1
             //grammar.Add("t→t3f|t4f|t5f|f");
             //grammar.Add("f→6e7|8|9");
 
-            grammar.Add("a→bf4fc|ε");//总
-            grammar.Add("b→1f3fd|1f3fdfb");//赋值语句
-            grammar.Add("c→03c|13c|e3c|1|0|ε");//表达式
-            grammar.Add("d→df3f0|0");//赋值语句右边
-            grammar.Add("e→2fef|2f0f0f|2f0f|2f1f|0e");//函数
-            grammar.Add("f→5f|ε");//分隔符
+            grammar.Add("a→b4f|ε");//总
+            grammar.Add("b→1c");//赋值语句1
+            grammar.Add("c→3d|5e");//赋值语句2
+            grammar.Add("d→0c|5e");//赋值语句3
+            grammar.Add("e→0c|1c|3d|5e|ε");//赋值语句4
+            grammar.Add("f→0g|1g|2h");//表达式1
+            grammar.Add("g→2h|3i|ε");//表达式2
+            grammar.Add("h→0g|1g|5i");//表达式3
+            grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
             //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符，9：#
             for (int i = 1; i < grammar.Count; i++)
             {
