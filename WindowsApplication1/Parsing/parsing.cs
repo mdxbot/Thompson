@@ -12,6 +12,12 @@ namespace WindowsApplication1
 
         public List<string> prediction(lexer lexer1)
         {
+            List<string> result = new List<string>();
+            List<string> operation = new List<string>();
+            List<string> arg1 = new List<string>();
+            List<string> arg2 = new List<string>();
+            List<List<string>> quaternion = new List<List<string>>();//四元式
+
             errors.Clear();
             Stack<char> ch = new Stack<char>();
             List<string> nstr = new List<string>();
@@ -301,15 +307,15 @@ namespace WindowsApplication1
             //grammar.Add("t→t3f|t4f|t5f|f");
             //grammar.Add("f→6e7|8|9");
 
-            //grammar.Add("a→b4f|ε");//总
-            //grammar.Add("b→1c");//赋值语句1
-            //grammar.Add("c→3d|5e");//赋值语句2
-            //grammar.Add("d→0c|5e");//赋值语句3
-            //grammar.Add("e→0c|1c|3d|5e|ε");//赋值语句4
-            //grammar.Add("f→0g|1g|2h");//表达式1
-            //grammar.Add("g→2h|3i|ε");//表达式2
-            //grammar.Add("h→0g|1g|5i");//表达式3
-            //grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
+            grammar.Add("a→b4f|ε");//总
+            grammar.Add("b→1c");//赋值语句1
+            grammar.Add("c→3d|5e");//赋值语句2
+            grammar.Add("d→1c|0c|5e");//赋值语句3
+            grammar.Add("e→0c|1c|3d|5e|ε");//赋值语句4
+            grammar.Add("f→0g|1g|2h");//表达式1
+            grammar.Add("g→2h|3i|ε");//表达式2
+            grammar.Add("h→0g|1g|5i");//表达式3
+            grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
             //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符，9：#
             for (int i = 1; i < grammar.Count; i++)
             {
