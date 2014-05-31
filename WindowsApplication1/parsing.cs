@@ -12,11 +12,16 @@ namespace WindowsApplication1
 
         public List<string> prediction(lexer lexer1)
         {
+            Stack<string> read = new Stack<string>();
             List<string> result = new List<string>();
-            List<string> operation = new List<string>();
+            List<string> op = new List<string>();
             List<string> arg1 = new List<string>();
             List<string> arg2 = new List<string>();
-            List<List<string>> quaternion = new List<List<string>>();//四元式
+            List<List<string>> quad = new List<List<string>>();//四元式
+            quad.Add(arg1);
+            quad.Add(arg2);
+            quad.Add(op);
+            quad.Add(result);
 
             errors.Clear();
             Stack<char> ch = new Stack<char>();
@@ -40,6 +45,26 @@ namespace WindowsApplication1
                     {
                         if (x.ToString() == a)
                         {
+                            //四元式生成
+                            read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
+                            if (nstr[count - 1] == "0" || nstr[count - 1] == "1")
+                            {
+                                if (quad[0].Count > quad[1].Count)
+                                {
+                                    quad[1].Add(cstr[count - 1]);
+                                }
+                                else if(quad[0].Count == quad[1].Count)
+                                {
+                                    quad[0].Add(cstr[count - 1]);
+                                }
+                            }
+                            else if (nstr[count - 1] == "2")
+                            {
+                                quad[2].Add(cstr[count - 1]);
+                                //sin|cos|tg|ctg|^|log|lg|ln
+
+                            }
+                            //END
                             ch.Pop();
                             nstr.Remove(nstr[0]);
                             count++;
@@ -310,7 +335,7 @@ namespace WindowsApplication1
             grammar.Add("a→b4f|ε");//总
             grammar.Add("b→1c");//赋值语句1
             grammar.Add("c→3d|5e");//赋值语句2
-            grammar.Add("d→1c|0c|5e");//赋值语句3
+            grammar.Add("d→0c|1c|5e");//赋值语句3
             grammar.Add("e→0c|1c|3d|5e|ε");//赋值语句4
             grammar.Add("f→0g|1g|2h");//表达式1
             grammar.Add("g→2h|3i|ε");//表达式2

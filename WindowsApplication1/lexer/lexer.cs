@@ -22,7 +22,7 @@ namespace WindowsApplication1
                 string function = "sin|cos|tg|ctg|^|log|lg|ln";
                 string operators = "*|/|+|-|=";
                 string startofEx = "?";
-                string delimiter = " |\r|\n|\t|;|(|)";
+                string delimiter = " |\r|\n|\t|,|;|(|)";
 
                 int f1 = 1;
                 nfa nfa1 = new nfa();
