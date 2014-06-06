@@ -39,34 +39,350 @@ namespace WindowsApplication1
                 int count = 1;
                 while (ch.Peek() != '#')
                 {
-                    string a = nstr[0];
+                    string a = nstr[count - 1];
                     char x = ch.Peek();
                     if (x >= '0' && x <= '9')
                     {
                         if (x.ToString() == a)
                         {
                             //四元式生成
-                            read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
-                            if (nstr[count - 1] == "0" || nstr[count - 1] == "1")
+                            if (nstr[count - 1] == "0" || nstr[count - 1] == "1" ||
+                                nstr[count - 1] == "2")
                             {
-                                if (quad[0].Count > quad[1].Count)
-                                {
-                                    quad[1].Add(cstr[count - 1]);
-                                }
-                                else if(quad[0].Count == quad[1].Count)
-                                {
-                                    quad[0].Add(cstr[count - 1]);
-                                }
+                                read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
                             }
-                            else if (nstr[count - 1] == "2")
+                            else if (nstr[count - 1] == "3")
                             {
-                                quad[2].Add(cstr[count - 1]);
-                                //sin|cos|tg|ctg|^|log|lg|ln
-
+                                if (cstr[count - 1] == "+" || cstr[count - 1] == "-")
+                                {
+                                    int flag = 0;
+                                    while (flag == 0)
+                                    {
+                                        if (read.Count < 3)
+                                        {
+                                            break;
+                                        }
+                                        string[] temp = new string[3];
+                                        for (int i = 0; i < 2; i++)
+                                        {
+                                            temp[i] = read.Peek();
+                                            read.Pop();
+                                        }
+                                        if (temp[1][0] == '3')
+                                        {
+                                            if (temp[1][2] != '=')
+                                            {
+                                                temp[2] = read.Peek();
+                                                read.Pop();
+                                                quad[0].Add(temp[2].Substring(2));
+                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[2].Add(temp[1].Substring(2));
+                                                read.Push("1|r" + quad[3].Count);
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                            else
+                                            {
+                                                read.Push(temp[1]);
+                                                read.Push(temp[0]);
+                                                flag = 1;
+                                            }
+                                        }
+                                        else if (temp[1][0] == '2')
+                                        {
+                                            if (temp[1][2] == '^')
+                                            {
+                                                temp[2] = read.Peek();
+                                                read.Pop();
+                                                quad[0].Add(temp[2].Substring(2));
+                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[2].Add(temp[1].Substring(2));
+                                                read.Push("1|r" + quad[3].Count);
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                            else
+                                            {
+                                                read.Push(temp[1]);
+                                                read.Push(temp[0]);
+                                                flag = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            read.Push(temp[1]);
+                                            read.Push(temp[0]);
+                                            flag = 1;
+                                        }
+                                    }
+                                }
+                                else if (cstr[count - 1] == "*" || cstr[count - 1] == "/")
+                                {
+                                    int flag = 0;
+                                    while (flag == 0)
+                                    {
+                                        if (read.Count < 3)
+                                        {
+                                            break;
+                                        }
+                                        string[] temp = new string[3];
+                                        for (int i = 0; i < 2; i++)
+                                        {
+                                            temp[i] = read.Peek();
+                                            read.Pop();
+                                        }
+                                        if (temp[1][0] == '3')
+                                        {
+                                            if (temp[1][2] == '*' || temp[1][2] == '/')
+                                            {
+                                                temp[2] = read.Peek();
+                                                read.Pop();
+                                                quad[0].Add(temp[2].Substring(2));
+                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[2].Add(temp[1].Substring(2));
+                                                read.Push("1|r" + quad[3].Count);
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                            else
+                                            {
+                                                read.Push(temp[1]);
+                                                read.Push(temp[0]);
+                                                flag = 1;
+                                            }
+                                        }
+                                        else if (temp[1][0] == '2')
+                                        {
+                                            if (temp[1][2] == '^')
+                                            {
+                                                temp[2] = read.Peek();
+                                                read.Pop();
+                                                quad[0].Add(temp[2].Substring(2));
+                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[2].Add(temp[1].Substring(2));
+                                                read.Push("1|r" + quad[3].Count);
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                            else
+                                            {
+                                                read.Push(temp[1]);
+                                                read.Push(temp[0]);
+                                                flag = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            read.Push(temp[1]);
+                                            read.Push(temp[0]);
+                                            flag = 1;
+                                        }
+                                    }
+                                }
+                                read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
+                            }
+                            else if (nstr[count - 1] == "5")
+                            {
+                                if (cstr[count - 1] == "(")
+                                {
+                                    read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
+                                }
+                                else if (cstr[count - 1] == ")")
+                                {
+                                    List<string> temp = new List<string>();
+                                    while (read.Peek() != "5|(")
+                                    {
+                                        if (read.Count > 1)
+                                        {
+                                            temp.Add(read.Peek());
+                                            read.Pop();
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    temp.Add(read.Peek());
+                                    read.Pop();
+                                    if (read.Count == 0)
+                                    {
+                                        int line = 1;
+                                        for (int i = 0; i < count; i++)
+                                        {
+                                            if (cstr[i] == '\n'.ToString())
+                                            {
+                                                line = line + 1;
+                                            }
+                                        }
+                                        errors.Add("Error:need a '(' match this ')' in line(" + line + ")");
+                                    }
+                                    else
+                                    {
+                                        if (temp.Contains("5|,") && temp.Count >= 4)//log(x,y)
+                                        {
+                                            if (read.Peek()[0] != '2')
+                                            {
+                                                int line = 1;
+                                                for (int i = 0; i < count; i++)
+                                                {
+                                                    if (cstr[i] == '\n'.ToString())
+                                                    {
+                                                        line = line + 1;
+                                                    }
+                                                }
+                                                errors.Add("Error:invalid ',' in line(" + line + ")");
+                                            }
+                                            else
+                                            {
+                                                string a1 = temp[2].Substring(2);
+                                                string a2 = temp[0].Substring(2);
+                                                if (temp.IndexOf("5|,") == 3)
+                                                {
+                                                    quad[0].Add(temp[2].Substring(2));
+                                                    quad[1].Add(temp[0].Substring(2));
+                                                    quad[2].Add(temp[1].Substring(2));
+                                                    a2 = "r" + quad[3].Count;
+                                                    quad[3].Add("r" + quad[3].Count);
+                                                    a1 = temp[4].Substring(2);
+                                                }
+                                                quad[0].Add(a1);
+                                                quad[1].Add(a2);
+                                                quad[2].Add(read.Peek().Substring(2));
+                                                read.Pop();
+                                                read.Push("1|r" + quad[3].Count);
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                        }
+                                        else if (read.Peek()[0] == '2' && read.Peek()[2] != '^' && temp.Count >= 2)//sin(x)
+                                        {
+                                            string a1 = temp[0].Substring(2);
+                                            if (temp.Count == 4)
+                                            {
+                                                quad[0].Add(temp[2].Substring(2));
+                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[2].Add(temp[1].Substring(2));
+                                                a1 = "r" + quad[3].Count;
+                                                quad[3].Add("r" + quad[3].Count);
+                                            }
+                                            quad[0].Add(a1);
+                                            quad[1].Add("#");
+                                            quad[2].Add(read.Peek().Substring(2));
+                                            read.Pop();
+                                            read.Push("1|r" + quad[3].Count);
+                                            quad[3].Add("r" + quad[3].Count);
+                                        }
+                                        else if (read.Peek()[0] == '3' || read.Peek()[0] == '4' ||
+                                            (read.Peek()[0] == '2' && read.Peek()[2] == '^') && temp.Count >= 4)//(x+y)
+                                        {
+                                            quad[0].Add(temp[2].Substring(2));
+                                            quad[1].Add(temp[0].Substring(2));
+                                            quad[2].Add(temp[1].Substring(2));
+                                            read.Push("1|r" + quad[3].Count);
+                                            quad[3].Add("r" + quad[3].Count);
+                                        }
+                                        else
+                                        {
+                                            int line = 1;
+                                            for (int i = 0; i < count; i++)
+                                            {
+                                                if (cstr[i] == '\n'.ToString())
+                                                {
+                                                    line = line + 1;
+                                                }
+                                            }
+                                            errors.Add("Error:line(" + line + ") syntax error(3)");
+                                        }
+                                    }
+                                }
+                                else if (cstr[count - 1] == ";")
+                                {
+                                    int flag = 0;
+                                    while (flag == 0)
+                                    {
+                                        List<string> temp = new List<string>();
+                                        while (read.Peek() != "5|;")
+                                        {
+                                            temp.Add(read.Peek());
+                                            read.Pop();
+                                            if (read.Count == 0)
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        if (temp.Count == 3 || temp.Count == 5)
+                                        {
+                                            quad[0].Add(temp[2].Substring(2));
+                                            quad[1].Add(temp[0].Substring(2));
+                                            quad[2].Add(temp[1].Substring(2));
+                                            if (temp.Count == 3)
+                                            {
+                                                flag = 1;
+                                            }
+                                            else
+                                            {
+                                                read.Push(temp[4]);
+                                                read.Push(temp[3]);
+                                            }
+                                            read.Push("1|r" + quad[3].Count);
+                                            quad[3].Add("r" + quad[3].Count);
+                                        }
+                                        else if (temp.Count == 1)
+                                        {
+                                            read.Push(temp[0]);
+                                            flag = 1;
+                                        }
+                                        else
+                                        {
+                                            int line = 1;
+                                            for (int i = 0; i < count; i++)
+                                            {
+                                                if (cstr[i] == '\n'.ToString())
+                                                {
+                                                    line = line + 1;
+                                                }
+                                            }
+                                            errors.Add("Error:line(" + line + ") syntax error(3)");
+                                        }
+                                    }
+                                    read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
+                                }
+                                else if (cstr[count - 1] == ",")
+                                {
+                                    List<string> temp = new List<string>();
+                                    while (read.Peek() != "5|(")
+                                    {
+                                        temp.Add(read.Peek());
+                                        read.Pop();
+                                        if (read.Count == 0)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    if (temp.Count == 3)
+                                    {
+                                        quad[0].Add(temp[2].Substring(2));
+                                        quad[1].Add(temp[0].Substring(2));
+                                        quad[2].Add(temp[1].Substring(2));
+                                        read.Push("1|r" + quad[3].Count);
+                                        quad[3].Add("r" + quad[3].Count);
+                                    }
+                                    else if (temp.Count == 1)
+                                    {
+                                        read.Push(temp[0]);
+                                    }
+                                    else
+                                    {
+                                        int line = 1;
+                                        for (int i = 0; i < count; i++)
+                                        {
+                                            if (cstr[i] == '\n'.ToString())
+                                            {
+                                                line = line + 1;
+                                            }
+                                        }
+                                        errors.Add("Error:line(" + line + ") syntax error(3)");
+                                    }
+                                    read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
+                                }
                             }
                             //END
                             ch.Pop();
-                            nstr.Remove(nstr[0]);
                             count++;
                         }
                         else
@@ -332,15 +648,15 @@ namespace WindowsApplication1
             //grammar.Add("t→t3f|t4f|t5f|f");
             //grammar.Add("f→6e7|8|9");
 
-            grammar.Add("a→b4f|ε");//总
-            grammar.Add("b→1c");//赋值语句1
-            grammar.Add("c→3d|5e");//赋值语句2
-            grammar.Add("d→0c|1c|5e");//赋值语句3
-            grammar.Add("e→0c|1c|3d|5e|ε");//赋值语句4
-            grammar.Add("f→0g|1g|2h");//表达式1
-            grammar.Add("g→2h|3i|ε");//表达式2
-            grammar.Add("h→0g|1g|5i");//表达式3
-            grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
+            grammar.Add("a→1b4c|ε");//总
+            grammar.Add("b→3c|5d");//语句1
+            grammar.Add("c→0e|1e|2c|5d");//语句2
+            grammar.Add("d→0e|1e|2c|3c|5d|ε");//语句3
+            grammar.Add("e→2c|3c|5d");//语句4
+            //grammar.Add("f→0e|1e|2c|5d");//表达式1
+            //grammar.Add("g→2h|3h|5i");//表达式2
+            //grammar.Add("h→0g|1g|2h|5i");//表达式3
+            //grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
             //0：常量，1：变量名，2：函数，3：运算符，4：？，5：分隔符，9：#
             for (int i = 1; i < grammar.Count; i++)
             {
