@@ -9,6 +9,7 @@ namespace WindowsApplication1
         private List<string> grammar = new List<string>();
         private List<string> errors = new List<string>();
         private string[,] table = new string[15,15];
+        private List<List<string>> quad = new List<List<string>>();//四元式
 
         public List<string> prediction(lexer lexer1)
         {
@@ -17,11 +18,13 @@ namespace WindowsApplication1
             List<string> op = new List<string>();
             List<string> arg1 = new List<string>();
             List<string> arg2 = new List<string>();
-            List<List<string>> quad = new List<List<string>>();//四元式
+            List<string> ln = new List<string>();
+            quad.Clear();
             quad.Add(arg1);
             quad.Add(arg2);
             quad.Add(op);
             quad.Add(result);
+            quad.Add(ln);
 
             errors.Clear();
             Stack<char> ch = new Stack<char>();
@@ -53,7 +56,29 @@ namespace WindowsApplication1
                             }
                             else if (nstr[count - 1] == "3")
                             {
-                                if (cstr[count - 1] == "+" || cstr[count - 1] == "-")
+                                if (nstr[count - 2] == "3" || nstr[count - 2] == "4"||
+                                    (nstr[count - 2] == "5" && cstr[count - 2] != ")"))
+                                {
+                                    if ((cstr[count - 2] != ";" || cstr[count - 2] == "?" ||
+                                        cstr[count - 2] == "=") && cstr[count - 1] == "-")
+                                    {
+                                        read.Push("0|0");
+                                    }
+                                    else
+                                    {
+                                        int line = 1;
+                                        for (int i = 0; i < count; i++)
+                                        {
+                                            if (cstr[i] == '\n'.ToString())
+                                            {
+                                                line = line + 1;
+                                            }
+                                        }
+                                        errors.Add("Error:line(" + line + ") syntax error(2)");
+                                        break;
+                                    }
+                                }
+                                else if (cstr[count - 1] == "+" || cstr[count - 1] == "-")
                                 {
                                     int flag = 0;
                                     while (flag == 0)
@@ -74,11 +99,12 @@ namespace WindowsApplication1
                                             {
                                                 temp[2] = read.Peek();
                                                 read.Pop();
-                                                quad[0].Add(temp[2].Substring(2));
-                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
                                                 quad[2].Add(temp[1].Substring(2));
                                                 read.Push("1|r" + quad[3].Count);
-                                                quad[3].Add("r" + quad[3].Count);
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                             else
                                             {
@@ -93,11 +119,12 @@ namespace WindowsApplication1
                                             {
                                                 temp[2] = read.Peek();
                                                 read.Pop();
-                                                quad[0].Add(temp[2].Substring(2));
-                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
                                                 quad[2].Add(temp[1].Substring(2));
                                                 read.Push("1|r" + quad[3].Count);
-                                                quad[3].Add("r" + quad[3].Count);
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                             else
                                             {
@@ -135,11 +162,12 @@ namespace WindowsApplication1
                                             {
                                                 temp[2] = read.Peek();
                                                 read.Pop();
-                                                quad[0].Add(temp[2].Substring(2));
-                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
                                                 quad[2].Add(temp[1].Substring(2));
                                                 read.Push("1|r" + quad[3].Count);
-                                                quad[3].Add("r" + quad[3].Count);
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                             else
                                             {
@@ -154,11 +182,12 @@ namespace WindowsApplication1
                                             {
                                                 temp[2] = read.Peek();
                                                 read.Pop();
-                                                quad[0].Add(temp[2].Substring(2));
-                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
                                                 quad[2].Add(temp[1].Substring(2));
                                                 read.Push("1|r" + quad[3].Count);
-                                                quad[3].Add("r" + quad[3].Count);
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                             else
                                             {
@@ -211,6 +240,7 @@ namespace WindowsApplication1
                                             }
                                         }
                                         errors.Add("Error:need a '(' match this ')' in line(" + line + ")");
+                                        break;
                                     }
                                     else
                                     {
@@ -227,54 +257,70 @@ namespace WindowsApplication1
                                                     }
                                                 }
                                                 errors.Add("Error:invalid ',' in line(" + line + ")");
+                                                break;
                                             }
                                             else
                                             {
-                                                string a1 = temp[2].Substring(2);
-                                                string a2 = temp[0].Substring(2);
+                                                string a1 = temp[2];
+                                                string a2 = temp[0];
                                                 if (temp.IndexOf("5|,") == 3)
                                                 {
-                                                    quad[0].Add(temp[2].Substring(2));
-                                                    quad[1].Add(temp[0].Substring(2));
+                                                    quad[0].Add(temp[2]);
+                                                    quad[1].Add(temp[0]);
                                                     quad[2].Add(temp[1].Substring(2));
-                                                    a2 = "r" + quad[3].Count;
-                                                    quad[3].Add("r" + quad[3].Count);
+                                                    a2 = "1|r" + quad[3].Count;
+                                                    quad[3].Add("1|r" + quad[3].Count);
                                                     a1 = temp[4].Substring(2);
+                                                    quad[4].Add(count.ToString());
                                                 }
                                                 quad[0].Add(a1);
                                                 quad[1].Add(a2);
                                                 quad[2].Add(read.Peek().Substring(2));
                                                 read.Pop();
                                                 read.Push("1|r" + quad[3].Count);
-                                                quad[3].Add("r" + quad[3].Count);
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                         }
                                         else if (read.Peek()[0] == '2' && read.Peek()[2] != '^' && temp.Count >= 2)//sin(x)
                                         {
-                                            string a1 = temp[0].Substring(2);
+                                            string a1 = temp[0];
                                             if (temp.Count == 4)
                                             {
-                                                quad[0].Add(temp[2].Substring(2));
-                                                quad[1].Add(temp[0].Substring(2));
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
                                                 quad[2].Add(temp[1].Substring(2));
-                                                a1 = "r" + quad[3].Count;
-                                                quad[3].Add("r" + quad[3].Count);
+                                                a1 = "1|r" + quad[3].Count;
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
                                             }
                                             quad[0].Add(a1);
                                             quad[1].Add("#");
                                             quad[2].Add(read.Peek().Substring(2));
                                             read.Pop();
                                             read.Push("1|r" + quad[3].Count);
-                                            quad[3].Add("r" + quad[3].Count);
+                                            quad[3].Add("1|r" + quad[3].Count);
+                                            quad[4].Add(count.ToString());
                                         }
-                                        else if (read.Peek()[0] == '3' || read.Peek()[0] == '4' ||
+                                        else if (read.Peek()[0] == '3' || read.Peek()[0] == '4' || 
+                                            (read.Peek()[0] == '5' && (read.Peek()[2] != ',' || read.Peek()[2] == ')' )) ||
                                             (read.Peek()[0] == '2' && read.Peek()[2] == '^') && temp.Count >= 4)//(x+y)
                                         {
-                                            quad[0].Add(temp[2].Substring(2));
-                                            quad[1].Add(temp[0].Substring(2));
-                                            quad[2].Add(temp[1].Substring(2));
+                                            while (temp.Count >= 4)
+                                            {
+                                                quad[0].Add(temp[2]);
+                                                quad[1].Add(temp[0]);
+                                                quad[2].Add(temp[1].Substring(2));
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                                quad[4].Add(count.ToString());
+                                                temp.RemoveRange(0, 3);
+                                                temp.Insert(0, "1|r" + quad[3].Count);
+                                            }
                                             read.Push("1|r" + quad[3].Count);
-                                            quad[3].Add("r" + quad[3].Count);
+                                        }
+                                        else if (temp.Count == 2)
+                                        {
+                                            read.Push(temp[0]);
                                         }
                                         else
                                         {
@@ -287,6 +333,7 @@ namespace WindowsApplication1
                                                 }
                                             }
                                             errors.Add("Error:line(" + line + ") syntax error(3)");
+                                            break;
                                         }
                                     }
                                 }
@@ -307,9 +354,10 @@ namespace WindowsApplication1
                                         }
                                         if (temp.Count == 3 || temp.Count == 5)
                                         {
-                                            quad[0].Add(temp[2].Substring(2));
-                                            quad[1].Add(temp[0].Substring(2));
+                                            quad[0].Add(temp[2]);
+                                            quad[1].Add(temp[0]);
                                             quad[2].Add(temp[1].Substring(2));
+                                            quad[4].Add(count.ToString());
                                             if (temp.Count == 3)
                                             {
                                                 flag = 1;
@@ -319,8 +367,15 @@ namespace WindowsApplication1
                                                 read.Push(temp[4]);
                                                 read.Push(temp[3]);
                                             }
+                                            if (temp[1] != "3|=")
+                                            {
+                                                quad[3].Add("1|r" + quad[3].Count);
+                                            }
+                                            else
+                                            {
+                                                quad[3].Add("#");
+                                            }
                                             read.Push("1|r" + quad[3].Count);
-                                            quad[3].Add("r" + quad[3].Count);
                                         }
                                         else if (temp.Count == 1)
                                         {
@@ -338,6 +393,7 @@ namespace WindowsApplication1
                                                 }
                                             }
                                             errors.Add("Error:line(" + line + ") syntax error(3)");
+                                            break;
                                         }
                                     }
                                     read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
@@ -356,11 +412,12 @@ namespace WindowsApplication1
                                     }
                                     if (temp.Count == 3)
                                     {
-                                        quad[0].Add(temp[2].Substring(2));
-                                        quad[1].Add(temp[0].Substring(2));
+                                        quad[0].Add(temp[2]);
+                                        quad[1].Add(temp[0]);
                                         quad[2].Add(temp[1].Substring(2));
                                         read.Push("1|r" + quad[3].Count);
-                                        quad[3].Add("r" + quad[3].Count);
+                                        quad[3].Add("1|r" + quad[3].Count);
+                                        quad[4].Add(count.ToString());
                                     }
                                     else if (temp.Count == 1)
                                     {
@@ -377,6 +434,7 @@ namespace WindowsApplication1
                                             }
                                         }
                                         errors.Add("Error:line(" + line + ") syntax error(3)");
+                                        break;
                                     }
                                     read.Push(nstr[count - 1] + "|" + cstr[count - 1]);
                                 }
@@ -649,11 +707,11 @@ namespace WindowsApplication1
             //grammar.Add("f→6e7|8|9");
 
             grammar.Add("a→1b4c|ε");//总
-            grammar.Add("b→3c|5d");//语句1
-            grammar.Add("c→0e|1e|2c|5d");//语句2
-            grammar.Add("d→0e|1e|2c|3c|5d|ε");//语句3
-            grammar.Add("e→2c|3c|5d");//语句4
-            //grammar.Add("f→0e|1e|2c|5d");//表达式1
+            grammar.Add("b→3c|5d");//1
+            grammar.Add("c→0e|1e|2f|3c|5d");//2
+            grammar.Add("d→0e|1e|2f|3c|5d|ε");//3
+            grammar.Add("e→2f|3c|5d");//4
+            grammar.Add("f→0e|1e|2f|5d");//5
             //grammar.Add("g→2h|3h|5i");//表达式2
             //grammar.Add("h→0g|1g|2h|5i");//表达式3
             //grammar.Add("i→0g|1g|2h|5i|ε");//表达式4
@@ -966,6 +1024,11 @@ namespace WindowsApplication1
                 }
             }
             return flag;
+        }
+
+        public List<List<string>> output()
+        {
+            return quad;
         }
     }
 }

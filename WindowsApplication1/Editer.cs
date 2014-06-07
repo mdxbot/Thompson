@@ -19,12 +19,22 @@ namespace WindowsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            semantic s1 = new semantic();
             textBox2.Clear();
             List<string> str = new List<string>();
-            foreach (var item in lexer1.createstr(textBox1.Text))
+            List<string> temp = new List<string>();
+            temp = lexer1.createstr(textBox1.Text);
+            foreach (var item in temp)
                 str.Add(item);
-            foreach (var item in sa.prediction(lexer1))
+            temp.Clear();
+            temp = sa.prediction(lexer1);
+            foreach (var item in temp)
                 str.Add(item);
+            temp.Clear();
+            temp = s1.calculate(sa,lexer1);
+            foreach (var item in temp)
+                str.Add(item);
+            temp.Clear();
             for (int i = 0; i < str.Count; i++)
             {
                 textBox2.Text = textBox2.Text + str[i] + "\r\n";
