@@ -71,7 +71,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = x + Convert.ToDouble(ystr.Substring(2));
+                                        temp = x + Convert.ToDouble(value[num].Substring(2));
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -104,7 +104,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = x - Convert.ToDouble(ystr.Substring(2));
+                                        temp = x - Convert.ToDouble(value[num].Substring(2));
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -137,7 +137,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = x * Convert.ToDouble(ystr.Substring(2));
+                                        temp = x * Convert.ToDouble(value[num].Substring(2));
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -170,7 +170,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = x / Convert.ToDouble(ystr.Substring(2));
+                                        temp = x / Convert.ToDouble(value[num].Substring(2));
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -203,7 +203,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Math.Pow(x, Convert.ToDouble(ystr.Substring(2)));
+                                        temp = Math.Pow(x, Convert.ToDouble(value[num].Substring(2)));
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -291,7 +291,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(ystr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Math.Log(Convert.ToDouble(ystr.Substring(2)), x);
+                                        temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), x);
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -348,7 +348,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(xstr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) + y;
+                                        temp = Convert.ToDouble(value[num].Substring(2)) + y;
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -364,14 +364,46 @@ namespace WindowsApplication1
                             else if (flag[1] == 1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                if (id.Contains(ystr) && id.Contains(xstr))
+                                if (id.Contains(xstr) && id.Contains(ystr))
                                 {
                                     int num1 = id.IndexOf(xstr);
                                     int num2 = id.IndexOf(ystr);
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) + Convert.ToDouble(ystr.Substring(2));
+                                        temp = Convert.ToDouble(value[num1].Substring(2)) + Convert.ToDouble(value[num2].Substring(2));
                                         value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "+" + ystr.Substring(2));
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "+" + value[num2].Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "+" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "+" + ystr.Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "+" + ystr.Substring(2));
+                                    }
+                                }
+                                else if(id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "+" + value[num2].Substring(2));
                                     }
                                     else
                                     {
@@ -397,7 +429,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(xstr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) - y;
+                                        temp = Convert.ToDouble(value[num].Substring(2)) - y;
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -413,14 +445,46 @@ namespace WindowsApplication1
                             else if (flag[1] == 1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                if (id.Contains(ystr) && id.Contains(xstr))
+                                if (id.Contains(xstr) && id.Contains(ystr))
                                 {
                                     int num1 = id.IndexOf(xstr);
                                     int num2 = id.IndexOf(ystr);
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) - Convert.ToDouble(ystr.Substring(2));
+                                        temp = Convert.ToDouble(value[num1].Substring(2)) - Convert.ToDouble(value[num2].Substring(2));
                                         value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "-" + ystr.Substring(2));
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "-" + value[num2].Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "-" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "-" + ystr.Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "-" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "-" + value[num2].Substring(2));
                                     }
                                     else
                                     {
@@ -446,7 +510,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(xstr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) * y;
+                                        temp = Convert.ToDouble(value[num].Substring(2)) * y;
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -462,14 +526,46 @@ namespace WindowsApplication1
                             else if (flag[1] == 1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                if (id.Contains(ystr) && id.Contains(xstr))
+                                if (id.Contains(xstr) && id.Contains(ystr))
                                 {
                                     int num1 = id.IndexOf(xstr);
                                     int num2 = id.IndexOf(ystr);
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) * Convert.ToDouble(ystr.Substring(2));
+                                        temp = Convert.ToDouble(value[num1].Substring(2)) * Convert.ToDouble(value[num2].Substring(2));
                                         value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "*" + ystr.Substring(2));
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "*" + value[num2].Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "*" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "*" + ystr.Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "*" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "*" + value[num2].Substring(2));
                                     }
                                     else
                                     {
@@ -511,14 +607,46 @@ namespace WindowsApplication1
                             else if (flag[1] == 1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                if (id.Contains(ystr) && id.Contains(xstr))
+                                if (id.Contains(xstr) && id.Contains(ystr))
                                 {
                                     int num1 = id.IndexOf(xstr);
                                     int num2 = id.IndexOf(ystr);
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
-                                        temp = Convert.ToDouble(xstr.Substring(2)) / Convert.ToDouble(ystr.Substring(2));
+                                        temp = Convert.ToDouble(value[num1].Substring(2)) / Convert.ToDouble(value[num2].Substring(2));
                                         value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "/" + ystr.Substring(2));
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "/" + value[num2].Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "/" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "/" + ystr.Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "/" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "/" + value[num2].Substring(2));
                                     }
                                     else
                                     {
@@ -544,7 +672,7 @@ namespace WindowsApplication1
                                     int num = id.IndexOf(xstr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Math.Pow(Convert.ToDouble(xstr.Substring(2)), y);
+                                        temp = Math.Pow(Convert.ToDouble(value[num].Substring(2)), y);
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -560,14 +688,46 @@ namespace WindowsApplication1
                             else if (flag[1] == 1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                if (id.Contains(ystr) && id.Contains(xstr))
+                                if (id.Contains(xstr) && id.Contains(ystr))
                                 {
                                     int num1 = id.IndexOf(xstr);
                                     int num2 = id.IndexOf(ystr);
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
-                                        temp = Math.Pow(Convert.ToDouble(xstr.Substring(2)), Convert.ToDouble(ystr.Substring(2)));
+                                        temp = Math.Pow(Convert.ToDouble(value[num1].Substring(2)), Convert.ToDouble(value[num2].Substring(2)));
                                         value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "^" + ystr.Substring(2));
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "^" + value[num2].Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "^" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|" + value[num1].Substring(2) + "^" + ystr.Substring(2));
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "^" + ystr.Substring(2));
+                                    }
+                                }
+                                else if (id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|" + xstr.Substring(2) + "^" + value[num2].Substring(2));
                                     }
                                     else
                                     {
@@ -585,14 +745,94 @@ namespace WindowsApplication1
                             }
                             break;
                         case "=":
-                            err(quad[4][i]);
+                            if (id.Contains(xstr))
+                            {
+                                int index = id.IndexOf(xstr);
+                                if (flag[1] == 0)
+                                {
+                                    value.RemoveAt(index);
+                                    value.Insert(index, "0|" + y);
+                                }
+                                else if (flag[1] == 1)
+                                {
+                                    if (id.Contains(ystr))
+                                    {
+                                        int num = id.IndexOf(ystr);
+                                        if (value[num][0] == '0')
+                                        {
+                                            value.RemoveAt(index);
+                                            value.Insert(index, "0|" + Convert.ToDouble(value[num].Substring(2)));
+                                        }
+                                        else
+                                        {
+                                            value.RemoveAt(index);
+                                            value.Insert(index, "1|" + ystr.Substring(2));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        value.RemoveAt(index);
+                                        value.Insert(index, "1|" + ystr.Substring(2));
+                                    }
+                                }
+                                else
+                                {
+                                    err(quad[4][i]);
+                                }
+                            }
+                            else
+                            {
+                                id.Add(xstr.Substring(2));
+                                if (flag[1] == 0)
+                                {
+                                    value.Add("0|" + y);
+                                }
+                                else if (flag[1] == 1)
+                                {
+                                    if (id.Contains(ystr))
+                                    {
+                                        int num = id.IndexOf(ystr);
+                                        if (value[num][0] == '0')
+                                        {
+                                            value.Add("0|" + Convert.ToDouble(value[num].Substring(2)));
+                                        }
+                                        else
+                                        {
+                                            value.Add("1|" + ystr.Substring(2));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|" + ystr.Substring(2));
+                                    }
+                                }
+                                else
+                                {
+                                    err(quad[4][i]);
+                                }
+                            }
                             break;
                         case "sin":
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = Math.Sin(x);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Sin(Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|sin(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|sin(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -603,8 +843,23 @@ namespace WindowsApplication1
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = Math.Cos(x);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Cos(Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|cos(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|cos(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -615,8 +870,23 @@ namespace WindowsApplication1
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = Math.Tan(x);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Tan(Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -627,8 +897,23 @@ namespace WindowsApplication1
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = 1 / Math.Tan(x);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = 1 / Math.Tan(Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|ctg(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|ctg(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -639,41 +924,124 @@ namespace WindowsApplication1
                             id.Add(quad[3][i].Substring(2));
                             if (flag[1] == -1)
                             {
-                                temp = Math.Log(x, 2);
-                                value.Add("0|" + temp);
-                            }
-                            else if (flag[1] == 0)
-                            {
-                                temp = Math.Log(y, x);
-                                value.Add("0|" + temp);
-                            }
-                            else if (flag[1] == 1)
-                            {
-                                if (id.Contains(ystr))
+                                if (id.Contains(xstr))
                                 {
-                                    int num = id.IndexOf(ystr);
+                                    int num = id.IndexOf(xstr);
                                     if (value[num][0] == '0')
                                     {
-                                        temp = Math.Log(y, x);
+                                        temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), 2);
                                         value.Add("0|" + temp);
                                     }
                                     else
                                     {
-                                        value.Add("1|log(" + x + "," + ystr + ")");
+                                        value.Add("1|log(" + xstr.Substring(2) + ")");
                                     }
                                 }
                                 else
                                 {
-                                    value.Add("1|log(" + x + "," + ystr + ")");
+                                    value.Add("1|log(" + xstr.Substring(2) + ")");
                                 }
+                            }
+                            else if (flag[1] == 0)
+                            {
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Log(y, Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + y + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|log(" + xstr.Substring(2) + "," + y + ")");
+                                }
+                            }
+                            else if (flag[1] == 1)
+                            {
+                                id.Add(quad[3][i].Substring(2));
+                                if (id.Contains(xstr) && id.Contains(ystr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num1][0] == '0' && value[num2][0] == '0')
+                                    {
+                                        temp = Math.Log(Convert.ToDouble(value[num2].Substring(2)), Convert.ToDouble(value[num1].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|log(" + value[num1].Substring(2) + "," + ystr.Substring(2) + ")");
+                                    }
+                                    else if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + value[num2].Substring(2) + ")");
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + ystr.Substring(2) + ")");
+                                    }
+                                }
+                                else if (id.Contains(xstr))
+                                {
+                                    int num1 = id.IndexOf(xstr);
+                                    if (value[num1][0] == '0')
+                                    {
+                                        value.Add("1|log(" + value[num1].Substring(2) + "," + ystr.Substring(2) + ")");
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + ystr.Substring(2) + ")");
+                                    }
+                                }
+                                else if (id.Contains(ystr))
+                                {
+                                    int num2 = id.IndexOf(ystr);
+                                    if (value[num2][0] == '0')
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + value[num2].Substring(2) + ")");
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|log(" + xstr.Substring(2) + "," + ystr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|log(" + xstr.Substring(2) + "," + ystr.Substring(2) + ")");
+                                }
+                            }
+                            else
+                            {
+                                err(quad[4][i]);
                             }
                             break;
                         case "ln":
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = Math.Log(x);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Log(Convert.ToDouble(value[num].Substring(2)));
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -684,8 +1052,23 @@ namespace WindowsApplication1
                             if (flag[1] == -1)
                             {
                                 id.Add(quad[3][i].Substring(2));
-                                temp = Math.Log(x, 2);
-                                value.Add("0|" + temp);
+                                if (id.Contains(xstr))
+                                {
+                                    int num = id.IndexOf(xstr);
+                                    if (value[num][0] == '0')
+                                    {
+                                        temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), 10);
+                                        value.Add("0|" + temp);
+                                    }
+                                    else
+                                    {
+                                        value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                    }
+                                }
+                                else
+                                {
+                                    value.Add("1|tg(" + xstr.Substring(2) + ")");
+                                }
                             }
                             else
                             {
@@ -712,7 +1095,10 @@ namespace WindowsApplication1
                     line = line + 1;
                 }
             }
-            error.Add("Error:line(" + line + ") syntax error(4)");
+            if (error.Contains("Error:line(" + line + ") syntax error(4)") == false)
+            {
+                error.Add("Error:line(" + line + ") syntax error(4)");
+            }
         }
     }
 }
