@@ -39,6 +39,10 @@ namespace WindowsApplication1
             {
                 textBox2.Text = textBox2.Text + str[i] + "\r\n";
             }
+            if (textBox2.Text == "")
+            {
+                textBox2.Text = s1.output();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

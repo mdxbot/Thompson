@@ -314,9 +314,14 @@ namespace WindowsApplication1
                                                 quad[3].Add("1|r" + quad[3].Count);
                                                 quad[4].Add(count.ToString());
                                                 temp.RemoveRange(0, 3);
-                                                temp.Insert(0, "1|r" + quad[3].Count);
+                                                temp.Insert(0, "1|r" + (quad[3].Count - 1));
                                             }
-                                            read.Push("1|r" + quad[3].Count);
+                                            quad[0].Add("1|r" + (quad[3].Count - 1));
+                                            quad[1].Add("#");
+                                            quad[2].Add(")");
+                                            quad[3].Add("1|r" + (quad[3].Count));
+                                            read.Push("1|r" + (quad[3].Count - 1));
+                                            quad[4].Add(count.ToString());
                                         }
                                         else if (temp.Count == 2)
                                         {
@@ -375,7 +380,7 @@ namespace WindowsApplication1
                                             {
                                                 quad[3].Add("#");
                                             }
-                                            read.Push("1|r" + quad[3].Count);
+                                            read.Push("1|r" + (quad[3].Count - 1));
                                         }
                                         else if (temp.Count == 1)
                                         {
