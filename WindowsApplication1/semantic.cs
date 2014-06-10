@@ -27,7 +27,18 @@ namespace WindowsApplication1
 
                 if (quad[0][i][0] == '0')
                 {
-                    x = Convert.ToDouble(quad[0][i].Substring(2));
+                    if (quad[0][i].Substring(2)=="PI")
+                    {
+                        x = Math.PI;
+                    }
+                    else if (quad[0][i].Substring(2) == "E")
+                    {
+                        x = Math.E;
+                    }
+                    else
+                    {
+                        x = Convert.ToDouble(quad[0][i].Substring(2));
+                    }
                 }
                 else if (quad[0][i][0] == '1')
                 {
@@ -40,7 +51,18 @@ namespace WindowsApplication1
                 }
                 if (quad[1][i][0] == '0')
                 {
-                    y = Convert.ToDouble(quad[1][i].Substring(2));
+                    if (quad[1][i].Substring(2)=="PI")
+                    {
+                        y = Math.PI;
+                    }
+                    else if (quad[1][i].Substring(2) == "E")
+                    {
+                        y = Math.E;
+                    }
+                    else
+                    {
+                        y = Convert.ToDouble(quad[1][i].Substring(2));
+                    }
                 }
                 else if (quad[1][i][0] == '1')
                 {
