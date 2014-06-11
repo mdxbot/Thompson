@@ -256,6 +256,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = Math.Sin(x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -268,6 +272,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = Math.Cos(x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -280,6 +288,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = Math.Tan(x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -292,6 +304,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = 1 / Math.Tan(x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -304,11 +320,19 @@ namespace WindowsApplication1
                             if (flag[1] == -1)
                             {
                                 temp = Math.Log(x, 2);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else if (flag[1] == 0)
                             {
                                 temp = Math.Log(y, x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else if (flag[1] == 1)
@@ -319,6 +343,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), x);
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -337,6 +365,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = Math.Log(x);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -349,6 +381,10 @@ namespace WindowsApplication1
                             {
                                 id.Add(quad[3][i].Substring(2));
                                 temp = Math.Log(x, 2);
+                                if (temp > -0.0000000001 && temp < 0.0000000001)
+                                {
+                                    temp = 0;
+                                }
                                 value.Add("0|" + temp);
                             }
                             else
@@ -932,6 +968,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Sin(Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -959,6 +999,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Cos(Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -986,6 +1030,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Tan(Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1013,6 +1061,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = 1 / Math.Tan(Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1040,6 +1092,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), 2);
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1060,6 +1116,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Log(y, Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1082,6 +1142,10 @@ namespace WindowsApplication1
                                     if (value[num1][0] == '0' && value[num2][0] == '0')
                                     {
                                         temp = Math.Log(Convert.ToDouble(value[num2].Substring(2)), Convert.ToDouble(value[num1].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1119,6 +1183,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Log(Convert.ToDouble(value[num].Substring(2)));
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
@@ -1146,6 +1214,10 @@ namespace WindowsApplication1
                                     if (value[num][0] == '0')
                                     {
                                         temp = Math.Log(Convert.ToDouble(value[num].Substring(2)), 10);
+                                        if (temp > -0.0000000001 && temp < 0.0000000001)
+                                        {
+                                            temp = 0;
+                                        }
                                         value.Add("0|" + temp);
                                     }
                                     else
