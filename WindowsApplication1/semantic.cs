@@ -795,11 +795,25 @@ namespace WindowsApplication1
                                         {
                                             if (y < 0)
                                             {
-                                                value.Add("1|(" + value[num].Substring(2) + ")^(" + y + ")");
+                                                if (value[num].Substring(2)[0] == '(')
+                                                {
+                                                    value.Add("1|" + value[num].Substring(2) + "^(" + y + ")");
+                                                }
+                                                else
+                                                {
+                                                    value.Add("1|(" + value[num].Substring(2) + ")^(" + y + ")");
+                                                }
                                             }
                                             else
                                             {
-                                                value.Add("1|(" + value[num].Substring(2) + ")^" + y);
+                                                if (value[num].Substring(2)[0] == '(')
+                                                {
+                                                    value.Add("1|" + value[num].Substring(2) + "^(" + y + ")");
+                                                }
+                                                else
+                                                {
+                                                    value.Add("1|(" + value[num].Substring(2) + ")^" + y);
+                                                }
                                             }
                                         }
                                     }
@@ -807,7 +821,14 @@ namespace WindowsApplication1
                                     {
                                         if (y < 0)
                                         {
-                                            value.Add("1|" + xstr.Substring(2) + "^(" + y + ")");
+                                            if (xstr.Substring(2)[0] == '(')
+                                            {
+                                                value.Add("1|" + xstr.Substring(2) + "^(" + y + ")");
+                                            }
+                                            else
+                                            {
+                                                value.Add("1|" + xstr.Substring(2) + "^(" + y + ")");
+                                            }
                                         }
                                         else
                                         {
@@ -854,11 +875,25 @@ namespace WindowsApplication1
                                         {
                                             if (Convert.ToDouble(value[num2].Substring(2)) < 0)
                                             {
-                                                value.Add("1|(" + value[num1].Substring(2) + ")^(" + value[num2].Substring(2) + ")");
+                                                if (value[num1].Substring(2)[0] == '(')
+                                                {
+                                                    value.Add("1|" + value[num1].Substring(2) + "^(" + value[num2].Substring(2) + ")");
+                                                }
+                                                else
+                                                {
+                                                    value.Add("1|(" + value[num1].Substring(2) + ")^(" + value[num2].Substring(2) + ")");
+                                                }
                                             }
                                             else
                                             {
-                                                value.Add("1|(" + value[num1].Substring(2) + ")^" + value[num2].Substring(2));
+                                                if (value[num1].Substring(2)[0] == '(')
+                                                {
+                                                    value.Add("1|" + value[num1].Substring(2) + "^(" + value[num2].Substring(2) + ")");
+                                                }
+                                                else
+                                                {
+                                                    value.Add("1|(" + value[num1].Substring(2) + ")^" + value[num2].Substring(2));
+                                                }
                                             }
                                         }
                                     }

@@ -59,23 +59,26 @@ namespace WindowsApplication1
                                 if (nstr[count - 2] == "3" || nstr[count - 2] == "4"||
                                     (nstr[count - 2] == "5" && cstr[count - 2] != ")"))
                                 {
-                                    if ((cstr[count - 2] != ";" || cstr[count - 2] == "?" ||
-                                        cstr[count - 2] == "=") && cstr[count - 1] == "-")
+                                    if (cstr[count - 1] == "-")
                                     {
-                                        read.Push("0|0");
-                                    }
-                                    else
-                                    {
-                                        int line = 1;
-                                        for (int i = 0; i < count; i++)
+                                        if ((cstr[count - 2] != ";" || cstr[count - 2] == "?" ||
+                                            cstr[count - 2] == "="))
                                         {
-                                            if (cstr[i] == '\n'.ToString())
-                                            {
-                                                line = line + 1;
-                                            }
+                                            read.Push("0|0");
                                         }
-                                        errors.Add("Error:line(" + line + ") syntax error(2)");
-                                        break;
+                                        else
+                                        {
+                                            int line = 1;
+                                            for (int i = 0; i < count; i++)
+                                            {
+                                                if (cstr[i] == '\n'.ToString())
+                                                {
+                                                    line = line + 1;
+                                                }
+                                            }
+                                            errors.Add("Error:line(" + line + ") syntax error(2)");
+                                            break;
+                                        }
                                     }
                                 }
                                 else if (cstr[count - 1] == "+" || cstr[count - 1] == "-")
