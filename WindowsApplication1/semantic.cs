@@ -808,7 +808,7 @@ namespace WindowsApplication1
                                             {
                                                 if (value[num].Substring(2)[0] == '(' && value[num].Substring(2)[value[num].Substring(2).Length - 1] == ')')
                                                 {
-                                                    value.Add("1|" + value[num].Substring(2) + "^(" + y + ")");
+                                                    value.Add("1|" + value[num].Substring(2) + "^" + y);
                                                 }
                                                 else
                                                 {
@@ -1276,14 +1276,18 @@ namespace WindowsApplication1
                     }
                 }
             }
-            str = value[value.Count - 1];
-            for (int i = 0; i < str.Length; i++)
+            str = "";
+            if (value.Count != 0)
             {
-                if (i < str.Length - 1)
+                str = value[value.Count - 1];
+                for (int i = 0; i < str.Length; i++)
                 {
-                    if (str[i] == '+' && str[i + 1] == '-')
+                    if (i < str.Length - 1)
                     {
-                        str = str.Remove(i, 1);
+                        if (str[i] == '+' && str[i + 1] == '-')
+                        {
+                            str = str.Remove(i, 1);
+                        }
                     }
                 }
             }
