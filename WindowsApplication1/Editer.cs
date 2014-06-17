@@ -42,7 +42,7 @@ namespace WindowsApplication1
             {
                 textBox2.Text = textBox2.Text + str[i] + "\r\n";
             }
-            if (textBox2.Text == "" && textBox2.Text != "")
+            if (textBox2.Text == "" && textBox1.Text != "")
             {
                 textBox2.Text = "result = " + s1.output();
             }
